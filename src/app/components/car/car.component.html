@@ -1,24 +1,40 @@
-<div *ngIf="!dataLoaded" class="spinner-border text-primary" role="status">
-    <span class="sr-only">Loading...</span>
+<div class="d-flex justify-content-center">
+    <div *ngIf="!dataLoaded" class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
 </div>
-
-<table class="table" *ngIf="dataLoaded">
-    <thead>
-        <tr>
-            <th>Car ID</th>
-            <th>Brand Name</th>
-            <th>Color Name</th>
-            <th>Model Year</th>
-            <th>Daily Price</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tr *ngFor="let car of cars">
-        <td>{{car.carId}}</td>
-        <td>{{car.brandName}}</td>
-        <td>{{car.colorName}}</td>
-        <td>{{car.modelYear}}</td>
-        <td>{{car.dailyPrice}}</td>
-        <td>{{car.description}}</td>
-    </tr>
-</table>
+<div class="row">
+    <div class="col-sm-4 mb-3" *ngFor="let car of cars">
+        <div class="card">
+            <img *ngIf="car.image.length < 1" src="../../../assets/images/no-image.png" class="card-img-top" width="100%"
+            height="200">
+            <div *ngFor="let img of car.image">
+                <img *ngIf="img.isMain" src="{{imageBasePath}}/{{img.imagePath}}" class="card-img-top" width="100%"
+                    height="200">
+            </div>
+            <div class="card-body pt-0 px-0">
+                <div class="d-flex flex-row justify-content-between mb-0 px-3 mt-2"> <small
+                        class="text-muted mt-1">Daily Price</small>
+                    <h6>{{car.dailyPrice | currency:"₺" }}</h6>
+                </div>
+                <div class="d-flex flex-row justify-content-between p-3 mid">
+                    <div class="d-flex flex-column">
+                        <p class="text-muted mb-1">{{car.brandName}}</p>
+                        <div class="d-flex flex-row"><img src="https://imgur.com/iPtsG7I.png" width="35px"
+                                height="25px">
+                            <div class="d-flex flex-column ml-1"><small class="ghj">{{car.colorName}}</small><small
+                                    class="ghj">{{car.description}}</small></div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column"><small class="text-muted mb-2">Model Year</small>
+                        <div class="d-flex flex-row"><img src="https://imgur.com/J11mEBq.png">
+                            <h6 class="ml-1">{{car.modelYear}}</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="mx-3 mt-3"><button type="button" class="btn btn-danger btn-block"
+                        routerLink="/cars/detail/{{car.carId}}"><small>Details</small></button></div>
+            </div>
+        </div>
+    </div>
+</div>
