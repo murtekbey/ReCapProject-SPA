@@ -12,6 +12,9 @@ import { CarComponent } from './components/car/car.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CarDetailComponent } from './components/car/car-detail/car-detail.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { FilterPipeModule } from 'ngx-filter-pipe';
+import { FormsModule } from '@angular/forms';
+import { CarFilterComponent } from './components/car/car-filter/car-filter.component';
 
 @NgModule({
   declarations: [
@@ -24,11 +27,14 @@ import { FooterComponent } from './components/footer/footer.component';
     CarComponent,
     CarDetailComponent,
     FooterComponent,
+    CarFilterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FilterPipeModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

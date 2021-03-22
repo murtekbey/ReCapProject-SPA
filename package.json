@@ -22,6 +22,7 @@
     "angular-environment": "^1.0.8",
     "bootstrap": "^4.6.0",
     "jquery": "^3.6.0",
+    "ngx-filter-pipe": "^2.1.2",
     "ngx-toastr": "^13.2.1",
     "popper.js": "^1.16.1",
     "rxjs": "~6.6.0",

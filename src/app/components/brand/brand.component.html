@@ -1,5 +1,13 @@
+<div class="mb-3">
+    <label for="brandFilter" class="form-label">Marka ara</label>
+    <input id="brandFilter" type="text" class="form-control" [(ngModel)]="brandFilter.brandName" placeholder="ara">
+</div>
+
 <ul class="list-group">
     <li (click)="setCurrentBrand(brand)" routerLink="/cars/brand/{{brand.brandId}}"
-        [class]="getCurrentBrandClass(brand)" *ngFor="let brand of brands">
+        [class]="getCurrentBrandClass(brand)" *ngFor="let brand of brands | filterBy: brandFilter">
         {{brand.brandName}}</li>
+    <li *ngIf="(brands | filterBy: brandFilter).length === 0">No matching elements</li>
 </ul>
+
+<div>
