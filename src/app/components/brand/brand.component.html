@@ -1,13 +1,17 @@
-<div class="mb-3">
-    <label for="brandFilter" class="form-label">Marka ara</label>
-    <input id="brandFilter" type="text" class="form-control" [(ngModel)]="brandFilter.brandName" placeholder="ara">
+<div class="card">
+    <div class="card-header">
+        Marka
+    </div>
+    <div class="card-body">
+        <div class="mb-3">
+            <input id="brandFilter" type="text" class="form-control" [(ngModel)]="brandFilter.brandName"
+                placeholder="Arama yapmak istediğiniz markayı yazınız">
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item" routerLink="/cars/brand/{{brand.brandId}}"
+                *ngFor="let brand of brands| filterBy: brandFilter">
+                {{brand.brandName}}</li>
+            <li class="list-group-item" *ngIf="(brands | filterBy: brandFilter).length === 0">No matching elements</li>
+        </ul>
+    </div>
 </div>
-
-<ul class="list-group">
-    <li (click)="setCurrentBrand(brand)" routerLink="/cars/brand/{{brand.brandId}}"
-        [class]="getCurrentBrandClass(brand)" *ngFor="let brand of brands | filterBy: brandFilter">
-        {{brand.brandName}}</li>
-    <li *ngIf="(brands | filterBy: brandFilter).length === 0">No matching elements</li>
-</ul>
-
-<div>

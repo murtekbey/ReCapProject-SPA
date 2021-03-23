@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Brand } from 'src/app/models/brand';
-import { Color } from 'src/app/models/color';
+import { Brand } from 'src/app/models/entities/brand';
+import { Color } from 'src/app/models/entities/color';
 import { BrandService } from 'src/app/services/brand.service';
 import { ColorService } from 'src/app/services/color.service';
 

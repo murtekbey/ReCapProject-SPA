@@ -1,6 +1,6 @@
-import { CarImage } from './carImage';
+import { CarImage } from '../entities/carImage';
 
-export interface Car {
+export interface CarDetailDto {
   carId: number;
   brandName: string;
   colorName: string;

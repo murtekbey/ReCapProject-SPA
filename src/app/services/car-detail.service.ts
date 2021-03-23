@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Car } from '../models/car';
-import { CarImage } from '../models/carImage';
+import { CarDetailDto } from '../models/dtos/carDetailDto';
 import { ListResponseModel } from '../models/listResponseModel';
 
 @Injectable({
@@ -12,13 +11,37 @@ import { ListResponseModel } from '../models/listResponseModel';
 export class CarDetailService {
   constructor(private httpClient: HttpClient) {}
 
-  getCarById(carId: number): Observable<ListResponseModel<Car>> {
-    let newPath = environment.apiUrl + 'cars/detailsbycarid?carId=' + carId;
-    return this.httpClient.get<ListResponseModel<Car>>(newPath);
+  getCarDetails(): Observable<ListResponseModel<CarDetailDto>> {
+    return this.httpClient.get<ListResponseModel<CarDetailDto>>(
+      environment.apiUrl + 'cars/details/'
+    );
   }
 
-  getPhotosbyCarId(carId: number): Observable<ListResponseModel<CarImage>> {
-    let newPath = environment.apiUrl + 'carimages/photosbycar?carId=' + carId;
-    return this.httpClient.get<ListResponseModel<CarImage>>(newPath);
+  getCarById(carId: number): Observable<ListResponseModel<CarDetailDto>> {
+    let newPath = environment.apiUrl + 'cars/detailsbycarid?carId=' + carId;
+    return this.httpClient.get<ListResponseModel<CarDetailDto>>(newPath);
+  }
+
+  getCarsByBrand(brandId: number): Observable<ListResponseModel<CarDetailDto>> {
+    let newPath = environment.apiUrl + 'cars/detailsbybrand?brandId=' + brandId;
+    return this.httpClient.get<ListResponseModel<CarDetailDto>>(newPath);
+  }
+
+  getCarsByColor(colorId: number): Observable<ListResponseModel<CarDetailDto>> {
+    let newPath = environment.apiUrl + 'cars/detailsbycolor?colorId=' + colorId;
+    return this.httpClient.get<ListResponseModel<CarDetailDto>>(newPath);
+  }
+
+  getCarsByColorAndBrand(
+    colorId: number,
+    brandId: number
+  ): Observable<ListResponseModel<CarDetailDto>> {
+    let newPath =
+      environment.apiUrl +
+      'cars/detailsbycolorandbrand?colorId=' +
+      colorId +
+      '&brandId=' +
+      brandId;
+    return this.httpClient.get<ListResponseModel<CarDetailDto>>(newPath);
   }
 }

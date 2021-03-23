@@ -1,18 +1,17 @@
-<div class="row mb-5" *ngFor="let carDetail of carDetails">
+<div class="d-flex justify-content-center">
+    <div *ngIf="!dataLoaded" class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<div class="row" *ngIf="carDetail">
     <div id="carDetailCarousel" class="carousel slide col-md-8" data-ride="carousel">
-        <div class="d-flex justify-content-center">
-            <div *ngIf="!dataLoaded" class="spinner-border text-primary" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
         <div class="carousel-inner img-fluid">
             <div class="card" *ngIf="!carDetail.image.length">
-                <img src="../../../../assets/images/no-image.png"
-                    class="bd-placeholder-img" width="100%" height="100%">
+                <img src="../../../../assets/images/no-image.png" class="bd-placeholder-img" width="100%" height="100%">
             </div>
-            <div class="carousel-item card" *ngFor="let img of carDetail.image; let i=index"
+            <div class="carousel-item card" *ngFor="let image of carDetail.image; let i=index"
                 [ngClass]="(i === 0) ? 'active' : '' ">
-                <img class="bd-placeholder-img" width="100%" height="100%" src="{{imageBasePath}}/{{img.imagePath}}">
+                <img class="bd-placeholder-img" width="100%" height="100%" src="{{imageBasePath}}/{{image.imagePath}}">
             </div>
             <div class="container" *ngIf="carDetail.image.length > 1"> <a class="carousel-control-prev"
                     href="#carDetailCarousel" role="button" data-slide="prev">
@@ -31,8 +30,8 @@
             <h5 class="card-title">{{carDetail.brandName}}</h5>
             <h6 class="card-subtitle mb-2 text-muted">{{carDetail.colorName}}</h6>
             <p class="card-text">{{carDetail.description}}</p>
-            <a href="#" class="card-link">Kirala</a>
-            <a href="#" class="card-link">Geri Dön</a>
+            <app-rental-add [carDetail]="carDetail" [imageBasePath]="imageBasePath"></app-rental-add>
+            <a routerLink="/cars" class="card-link">Geri Dön</a>
         </div>
     </div>
 </div>

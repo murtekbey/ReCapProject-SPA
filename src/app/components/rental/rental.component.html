@@ -13,12 +13,37 @@
             <th>Return Date</th>
         </tr>
     </thead>
-    <tr *ngFor="let rental of rentals">
-        <td>{{rental.rentalId}}</td>
-        <td>{{rental.brandName}}</td>
-        <td>{{rental.customerName}}</td>
-        <td>{{rental.userName}}</td>
-        <td>{{rental.rentDate}}</td>
-        <td>{{rental.returnDate}}</td>
+    <tr *ngFor="let rentalDetail of rentalDetails">
+        <ng-template #content let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Araç Teslim</h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="deliverForm">
+                    <input type="hidden" id="rentalId" formControlName="rentalId" class="form-control"
+                        [(ngModel)]="rentalDetail.rentalId" />
+                    <div class="form-group row mb-2">
+                        <label for="example-date-input" class="col-4 col-form-label">Teslim Tarihi</label>
+                        <div class="col-8">
+                            <input class="form-control" min="{{ getReturnMinDate() }}" value="{{ getReturnMinDate() }}"
+                                type="date" formControlName="returnDate" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+            </div>
+        </ng-template>
+        <td>{{rentalDetail.rentalId}}</td>
+        <td>{{rentalDetail.brandName}}</td>
+        <td>{{rentalDetail.customerName}}</td>
+        <td>{{rentalDetail.userName}}</td>
+        <td>{{rentalDetail.rentDate}}</td>
+        <td>{{rentalDetail.returnDate}}</td>
+        <td><button class="btn btn-success" (click)="open(content)">Deliver</button></td>
     </tr>
 </table>
