@@ -11,6 +11,7 @@
             <th>Username</th>
             <th>Rent Date</th>
             <th>Return Date</th>
+            <th></th>
         </tr>
     </thead>
     <tr *ngFor="let rentalDetail of rentalDetails">
@@ -23,8 +24,8 @@
             </div>
             <div class="modal-body">
                 <form [formGroup]="deliverForm">
-                    <input type="hidden" id="rentalId" formControlName="rentalId" class="form-control"
-                        [(ngModel)]="rentalDetail.rentalId" />
+                    <!-- <input type="hidden" id="rentalId" formControlName="rentalId" class="form-control"
+                        [(ngModel)]="rentalDetail.rentalId" /> -->
                     <div class="form-group row mb-2">
                         <label for="example-date-input" class="col-4 col-form-label">Teslim Tarihi</label>
                         <div class="col-8">
@@ -42,8 +43,9 @@
         <td>{{rentalDetail.brandName}}</td>
         <td>{{rentalDetail.customerName}}</td>
         <td>{{rentalDetail.userName}}</td>
-        <td>{{rentalDetail.rentDate}}</td>
-        <td>{{rentalDetail.returnDate}}</td>
-        <td><button class="btn btn-success" (click)="open(content)">Deliver</button></td>
+        <td>{{rentalDetail.rentDate | date: 'fullDate' }}</td>
+        <td *ngIf="rentalDetail.returnDate">{{rentalDetail.returnDate | date: 'fullDate' }}</td>
+        <td *ngIf="!rentalDetail.returnDate">No Return Date</td>
+        <td><button class="btn btn-success" (click)="open(content); getRentalById(rentalDetail.rentalId)">Deliver</button></td>
     </tr>
 </table>

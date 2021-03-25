@@ -16,4 +16,9 @@ export class RentalDetailService {
       environment.apiUrl + 'rentals/details'
     );
   }
+
+  getRentalDetailsById(rentalId: number): Observable<ListResponseModel<RentalDetailDto>> {
+    let newPath = environment.apiUrl + 'rentals/detailsbyrentalid?rentalId=' + rentalId;
+    return this.httpClient.get<ListResponseModel<RentalDetailDto>>(newPath);
+  }
 }

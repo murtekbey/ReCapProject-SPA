@@ -15,10 +15,9 @@ import { RentalService } from 'src/app/services/rental.service';
 export class RentalComponent implements OnInit {
   deliverForm: FormGroup;
   rentalDetails: RentalDetailDto[] = [];
-  rental: Rental[] = [];
+  rental: RentalDetailDto;
   returnDate: Date;
   dataLoaded = false;
-
   closeResult = '';
 
   constructor(
@@ -30,8 +29,8 @@ export class RentalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getRentals();
     this.deliverRentalForm();
+    this.getRentals();
   }
 
   open(content: any) {
@@ -72,10 +71,14 @@ export class RentalComponent implements OnInit {
     });
   }
 
-  getRentalsById(rentalId: number) {
-    this.rentalService.getRentalById(rentalId).subscribe((response) => {
-      this.rental = response.data;
-    });
+  getRentalById(rentalId: number) {
+    this.rentalDetailService
+      .getRentalDetailsById(rentalId)
+      .subscribe((response) => {
+        this.rental = response.data[0];
+        console.log(this.rental);
+        this.dataLoaded = true;
+      });
   }
 
   deliverCar() {

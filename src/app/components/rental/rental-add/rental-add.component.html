@@ -9,7 +9,7 @@
         <form [formGroup]="rentalAddForm">
             <div class="form-group">
                 <input type="hidden" id="carId" formControlName="carId" placeholder="Car ID" class="form-control"
-                    [(ngModel)]="carDetail.carId" />
+                    value="{{carDetail.carId}}" />
                 <label for="rentACar">Aracı kiralamak istediğinizden emin misiniz?</label>
                 <div class="mb-3">
                     <div class="card">
@@ -45,6 +45,13 @@
                                 <div class="col-8">
                                     <input class="form-control" min="{{ getRentMinDate() }}"
                                         value="{{ getRentMinDate() }}" type="date" formControlName="rentDate" />
+                                </div>
+                            </div>
+                            <div class="form-group row mb-2">
+                                <label for="example-date-input" class="col-4 col-form-label">Bitiş</label>
+                                <div class="col-8">
+                                    <input class="form-control" min="{{ getReturnMinDate() }}"
+                                        value="{{ getReturnMinDate() }}" type="date" formControlName="returnDate" />
                                 </div>
                             </div>
                         </div>

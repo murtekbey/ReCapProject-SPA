@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { Car } from 'src/app/models/entities/car';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { RentalService } from 'src/app/services/rental.service';
@@ -59,9 +58,10 @@ export class RentalAddComponent implements OnInit {
 
   createRentalAddForm() {
     this.rentalAddForm = this.formBuilder.group({
-      carId: ['', Validators.required],
+      carId: [this.carDetail.carId, Validators.required],
       customerId: [1, Validators.required],
       rentDate: ['', Validators.required],
+      returnDate: ['', Validators.required],
     });
   }
 
@@ -70,7 +70,10 @@ export class RentalAddComponent implements OnInit {
       let rentalModel = Object.assign({}, this.rentalAddForm.value);
       this.rentalService.addRentals(rentalModel).subscribe(
         (response) => {
-          this.toastrService.success(response.message, 'Başarılı');
+          this.toastrService.success(
+            response.message,
+            'Araç başarıyla kiralandı'
+          );
         },
         (responseError) => {
           console.log(responseError);

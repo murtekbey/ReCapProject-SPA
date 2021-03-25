@@ -18,11 +18,6 @@ export class RentalService {
     );
   }
 
-  getRentalById(rentalId: number): Observable<ListResponseModel<Rental>> {
-    let newPath = environment.apiUrl + 'rentals/getbyid?rentalId=' + rentalId;
-    return this.httpClient.get<ListResponseModel<Rental>>(newPath);
-  }
-
   addRentals(rental: Rental): Observable<ResponseModel> {
     return this.httpClient.post<ResponseModel>(
       environment.apiUrl + 'rentals/add',
