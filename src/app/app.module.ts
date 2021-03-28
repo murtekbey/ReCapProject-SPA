@@ -21,7 +21,7 @@ import { CarFilterComponent } from './components/car/car-filter/car-filter.compo
 import { RentalAddComponent } from './components/rental/rental-add/rental-add.component';
 import { AboutComponent } from './components/about/about.component';
 import { CarCardComponent } from './components/car/car-card/car-card.component';
-import { PaymentComponent } from './payment/payment.component';
+import { PaymentComponent } from './components/payment/payment.component';
 
 @NgModule({
   declarations: [

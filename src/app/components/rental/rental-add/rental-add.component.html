@@ -40,27 +40,33 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group row mb-2">
-                                <label for="example-date-input" class="col-4 col-form-label">Başlangıç</label>
-                                <div class="col-8">
-                                    <input class="form-control" min="{{ getRentMinDate() }}"
-                                        value="{{ getRentMinDate() }}" type="date" formControlName="rentDate" />
+                            <div class="container">
+                                <div class="form-group row mb-2">
+                                    <label for="example-date-input" class="col-4 col-form-label">Başlangıç:</label>
+                                    <div class="col-8">
+                                        <input class="form-control" min="{{ getRentMinDate() }}"
+                                            value="{{ getRentMinDate() }}" type="date" formControlName="rentDate" [(ngModel)]="rentDate" (ngModelChange)="totalPriceCalculate()"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-2">
+                                    <label for="example-date-input" class="col-4 col-form-label">Bitiş:</label>
+                                    <div class="col-8">
+                                        <input class="form-control" min="{{ getReturnMinDate() }}"
+                                            value="{{ getReturnMinDate() }}" type="date" formControlName="returnDate" [(ngModel)]="returnDate" (ngModelChange)="totalPriceCalculate()"/>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group row mb-2">
-                                <label for="example-date-input" class="col-4 col-form-label">Bitiş</label>
-                                <div class="col-8">
-                                    <input class="form-control" min="{{ getReturnMinDate() }}"
-                                        value="{{ getReturnMinDate() }}" type="date" formControlName="returnDate" />
-                                </div>
-                            </div>
+                            <div class="d-flex flex-row justify-content-between mb-0 px-3 mt-2"> <small
+                                class="text-muted mt-1">Toplam Fiyat:</small>
+                            <h6 *ngIf='totalPrice'>{{ totalPrice | currency:"₺" }}</h6>
+                        </div>
                         </div>
                     </div>
                 </div>
             </div>
         </form>
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer" *ngIf='formControl'>
         <button type="button" class="btn btn-outline-dark" (click)="modal.close('Yes click')">Evet</button>
         <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('No click')">Hayır</button>
     </div>
@@ -69,5 +75,3 @@
 <button class="btn btn-outline-primary" (click)="open(content)">Kirala</button>
 
 <hr>
-
-<pre>{{ closeResult }}</pre>

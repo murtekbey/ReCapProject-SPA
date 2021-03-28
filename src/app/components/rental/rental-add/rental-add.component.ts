@@ -4,6 +4,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { RentalService } from 'src/app/services/rental.service';
 import { CarDetailDto } from 'src/app/models/dtos/carDetailDto';
+import { Router } from '@angular/router';
+import { PaymentService } from 'src/app/services/payment.service';
+import { Rental } from 'src/app/models/entities/rental';
 
 @Component({
   selector: 'app-rental-add',
@@ -12,8 +15,10 @@ import { CarDetailDto } from 'src/app/models/dtos/carDetailDto';
 })
 export class RentalAddComponent implements OnInit {
   rentalAddForm: FormGroup;
-  closeResult = '';
-  rentDate: Date;
+  rentDate!: Date;
+  returnDate!: Date;
+  totalPrice: number;
+  formControl: boolean = false;
 
   @Input()
   carDetail: CarDetailDto;
@@ -25,7 +30,9 @@ export class RentalAddComponent implements OnInit {
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private rentalService: RentalService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private router: Router,
+    private paymentService: PaymentService
   ) {}
 
   ngOnInit(): void {
@@ -36,23 +43,38 @@ export class RentalAddComponent implements OnInit {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title', animation: true })
       .result.then(
-        (result) => {
-          this.add();
-          this.closeResult = `Ödeme gerçekleşti ${result}`;
+        () => {
+          let rental:Rental = {
+            rentalId: this.carDetail.carId,
+            carId: this.carDetail.carId,
+            customerId: 1,
+            rentDate: this.rentDate,
+            returnDate : this.returnDate
+          };
+          this.paymentService.setRental(rental, this.totalPrice)
+          this.router.navigate(['/payments']);
         },
         (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+          console.log(reason);
         }
       );
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
+  totalPriceCalculate() {
+    var date1 = new Date(this.returnDate);
+    var date2 = new Date(this.rentDate);
+    if (date1.getTime() === date2.getTime()) {
+      this.totalPrice = 0;
+      this.formControl = false;
+      this.toastrService.warning(
+        'Aynı gün için kiralama işlemi gerçekleştirilemez.',
+        'Uyarı'
+      );
     } else {
-      return `with: ${reason}`;
+      var difference = date1.getTime() - date2.getTime();
+      var days = Math.ceil(difference / (1000 * 3600 * 24));
+      this.totalPrice = this.carDetail.dailyPrice * days;
+      this.formControl = true;
     }
   }
 
@@ -60,8 +82,8 @@ export class RentalAddComponent implements OnInit {
     this.rentalAddForm = this.formBuilder.group({
       carId: [this.carDetail.carId, Validators.required],
       customerId: [1, Validators.required],
-      rentDate: ['', Validators.required],
-      returnDate: ['', Validators.required],
+      rentDate: [this.rentDate, Validators.required],
+      returnDate: [this.returnDate, Validators.required],
     });
   }
 
