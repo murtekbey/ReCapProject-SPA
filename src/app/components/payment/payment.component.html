@@ -1,3 +1,93 @@
-<p>{{ car.rentDate }}</p>
-<p>{{ totalPrice }}</p>
-{{test}}
+<div class="container" *ngIf='rental; totalPrice'>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="card col-md-6 pb-4 pt-2">
+            <div class="row">
+                <div class="col-md-7">
+                    <h4 class="panel-title">
+                        Payment Details
+                    </h4>
+                    <div class="mt-2">
+                        <label>
+                            <input type="checkbox" />
+                            Beni hatırla
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-5 mt-2">
+                    <h6 class="card-subtitle mt-1 text-muted"><small><b>Rent Date:</b> {{rental.rentDate}}</small>
+                    </h6>
+                    <h6 class="card-subtitle mt-1 text-muted"><small><b>Return Date:</b>
+                            {{rental.returnDate}}</small></h6>
+                </div>
+            </div>
+            <form [formGroup]="paymentForm">
+                <div class="form-group">
+                    <label for="cardNumber">
+                        CARD NUMBER</label>
+                    <div class="input-group">
+                        <input type="text" id="name" formControlName="cardNumber" class="form-control"
+                            placeholder="Valid Card Number" autofocus>
+                    </div>
+                    <div class="alert alert-danger" role="alert"
+                        *ngIf="paymentForm.get('cardNumber').hasError('required') && paymentForm.get('cardNumber').touched">
+                        Card bilgisi zorunludur
+                    </div>
+                    <div class="alert alert-danger" role="alert"
+                        *ngIf="paymentForm.get('cardNumber').hasError('pattern') && paymentForm.get('cardNumber').touched">
+                        Kart bilgileriniz hatalı
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-7 col-md-7">
+                        <div class="form-group">
+                            <label for="expiryMonth">
+                                EXPIRY DATE</label>
+                            <div class="row ml-1 input-group">
+                                <div class="col-xs-3 col-lg-3 pl-ziro">
+                                    <input type="text" formControlName="expiryMonth" class="form-control"
+                                        id="expiryMonth" placeholder="MM" required />
+                                </div>
+                                <div class="col-xs-3 col-lg-3 pl-ziro">
+                                    <input type="text" formControlName="expiryYear" class="form-control" id="expiryYear"
+                                        placeholder="YY" required />
+                                </div>
+                                <div class="alert alert-danger" role="alert"
+                                    *ngIf="paymentForm.get('expiryMonth').hasError('required') && paymentForm.get('expiryMonth').touched ||
+                                    paymentForm.get('expiryYear').hasError('required') && paymentForm.get('expiryYear').touched">
+                                    Son kullanım tarihi bilgisi zorunludur
+                                </div>
+                                <div class="alert alert-danger" role="alert" *ngIf="paymentForm.get('expiryMonth').hasError('pattern') || 
+                                paymentForm.get('expiryYear').hasError('pattern')">
+                                    Bilgileriniz hatalı
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-5 col-md-5 pull-right">
+                        <div class="form-group">
+                            <label for="cvvCode">
+                                CVV CODE</label>
+                            <input type="password" formControlName="cvvCode" class="form-control" id="cvvCode"
+                                placeholder="CVV" required />
+                        </div>
+                        <div class="alert alert-danger" role="alert"
+                            *ngIf="paymentForm.get('cvvCode').hasError('required') && paymentForm.get('cvvCode').touched">
+                            Zorunlu!
+                        </div>
+                        <div class="alert alert-danger" role="alert"
+                            *ngIf="paymentForm.get('cvvCode').hasError('pattern')">
+                            Hatalı!
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <ul class="nav nav-pills nav-stacked">
+                <h6 class="card-subtitle text-muted mt-2 mb-2"><b>Toplam Fiyat:</b> {{totalPrice |
+                    currency:"₺"}}</h6>
+            </ul>
+            <br />
+            <button (click)='add()' class="btn btn-success btn-lg btn-block" role="button"
+                [disabled]="!paymentForm.valid">İşlemi Tamamla</button>
+        </div>
+    </div>
