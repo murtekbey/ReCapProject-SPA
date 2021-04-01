@@ -1,4 +1,4 @@
-## Latest Updates - _Son Güncellemeler_ Test
+## Latest Updates - _Son Güncellemeler_
 
 - 29 March 2021
   - Still under construction. It will be updated over time. _(Proje hala yapım aşamasındadır. Zaman içerisinde güncellenecektir.)_
