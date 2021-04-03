@@ -1,9 +1,11 @@
 <div class="row">
     <div class="col-sm-4 mb-3" *ngFor="let carDetail of carDetails ">
         <div class="card">
-            <img *ngIf="carDetail.image.length < 1" src="../../../assets/images/no-image.png" class="card-img-top"
+            <img *ngIf="!carDetail.image.length;" src="../../../assets/images/no-image.png" class="card-img-top"
                 width="100%" height="200">
             <div *ngFor="let image of carDetail.image">
+                <img *ngIf="!image.isMain" src="../../../assets/images/no-image.png" class="card-img-top"
+                width="100%" height="200">
                 <img *ngIf="image.isMain" src="{{imageBasePath}}/{{image.imagePath}}" class="card-img-top" width="100%"
                     height="200">
             </div>
@@ -17,8 +19,8 @@
                         <p class="text-muted mb-1">{{carDetail.brandName}}</p>
                         <div class="d-flex flex-row"><img src="https://imgur.com/iPtsG7I.png" width="35px"
                                 height="25px">
-                            <div class="d-flex flex-column ml-1"><small class="ghj">{{carDetail.colorName}}</small><small
-                                    class="ghj">{{carDetail.description}}</small></div>
+                            <div class="d-flex flex-column ml-1"><small class="ghj">{{carDetail.colorName}}</small>
+                            </div>
                         </div>
                     </div>
                     <div class="d-flex flex-column"><small class="text-muted mb-2">Model Year</small>

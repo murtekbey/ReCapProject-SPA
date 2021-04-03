@@ -13,26 +13,28 @@ import { AppComponent } from './app.component';
 import { NaviComponent } from './components/navi/navi.component';
 import { FooterComponent } from './components/footer/footer.component';
 
-import { BrandComponent } from './components/brand/brand.component';
-import { BrandAddComponent } from './components/brand/brand-add/brand-add.component';
+import { BrandComponent } from './components/admin/brand/brand.component';
+import { BrandAddComponent } from './components/admin/brand/brand-add/brand-add.component';
 
-import { ColorComponent } from './components/color/color.component';
-import { ColorAddComponent } from './components/color/color-add/color-add.component';
+import { ColorComponent } from './components/admin/color/color.component';
+import { ColorAddComponent } from './components/admin/color/color-add/color-add.component';
 
 import { RentalComponent } from './components/rental/rental.component';
 import { RentalAddComponent } from './components/rental/rental-add/rental-add.component';
 
 import { CarComponent } from './components/car/car.component';
-import { CarAddComponent } from './components/car/car-add/car-add.component';
+import { CarAddComponent } from './components/admin/car-admin/car-add/car-add.component';
 import { CarCardComponent } from './components/car/car-card/car-card.component';
 import { CarDetailComponent } from './components/car/car-detail/car-detail.component';
 import { CarFilterComponent } from './components/car/car-filter/car-filter.component';
 
-import { CustomerComponent } from './components/customer/customer.component';
+import { CustomerComponent } from './components/admin/customer/customer.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { AboutComponent } from './components/about/about.component';
-import { BrandUpdateComponent } from './components/brand/brand-update/brand-update.component';
-import { ColorUpdateComponent } from './components/color/color-update/color-update.component';
+import { BrandUpdateComponent } from './components/admin/brand/brand-update/brand-update.component';
+import { ColorUpdateComponent } from './components/admin/color/color-update/color-update.component';
+import { CarAdminComponent } from './components/admin/car-admin/car-admin.component';
+import { CarUpdateComponent } from './components/admin/car-admin/car-update/car-update.component';
 
 @NgModule({
   declarations: [
@@ -43,23 +45,26 @@ import { ColorUpdateComponent } from './components/color/color-update/color-upda
 
     BrandComponent,
     BrandAddComponent,
+    BrandUpdateComponent,
 
     ColorComponent,
     ColorAddComponent,
+    ColorUpdateComponent,
 
-    RentalComponent,
-    RentalAddComponent,
+    CarAdminComponent,
+    CarAddComponent,
 
     CarComponent,
-    CarAddComponent,
     CarCardComponent,
     CarDetailComponent,
     CarFilterComponent,
 
+    RentalComponent,
+    RentalAddComponent,
+
     CustomerComponent,
     PaymentComponent,
-    BrandUpdateComponent,
-    ColorUpdateComponent,
+    CarUpdateComponent,
   ],
   imports: [
     BrowserModule,

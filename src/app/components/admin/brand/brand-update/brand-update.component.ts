@@ -55,7 +55,7 @@ export class BrandUpdateComponent implements OnInit {
       this.brandService.update(brandModel).subscribe(
         (response) => {
           setTimeout(() => {
-            this.router.navigate(['brands']);
+            this.router.navigate(['admin/brands']);
           }, 1000);
           this.toastrService.success(response.message, 'Başarılı');
         },
@@ -80,7 +80,7 @@ export class BrandUpdateComponent implements OnInit {
     this.brandService.delete(this.brand).subscribe(
       (response) => {
         setTimeout(() => {
-          this.router.navigate(['brands']);
+          this.router.navigate(['admin/brands']);
         }, 1000);
         this.toastrService.info(response.message, 'Başarılı');
       },

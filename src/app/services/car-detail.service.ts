@@ -13,7 +13,7 @@ export class CarDetailService {
 
   getCarDetails(): Observable<ListResponseModel<CarDetailDto>> {
     return this.httpClient.get<ListResponseModel<CarDetailDto>>(
-      environment.apiUrl + 'cars/details/'
+      environment.apiUrl + 'cars/details'
     );
   }
 

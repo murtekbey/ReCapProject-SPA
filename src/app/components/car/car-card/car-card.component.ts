@@ -13,5 +13,6 @@ export class CarCardComponent implements OnInit {
   imageBasePath: string;
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 }
