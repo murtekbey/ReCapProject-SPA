@@ -1,5 +1,8 @@
 ## Latest Updates - _Son Güncellemeler_
 
+- 04 April 2021
+  - CRUD operations are added. _((C)reate, (R)ead, (U)pdate, (D)elete operasyonları eklendi.)_
+
 - 29 March 2021
   - Still under construction. It will be updated over time. _(Proje hala yapım aşamasındadır. Zaman içerisinde güncellenecektir.)_
   - This is designed for [ReCapProject](https://github.com/murtekbey/ReCapProject) _(Bu proje linkde gördüğünüz back-end projesine bağlı olarak çalışmaktadır.)_
