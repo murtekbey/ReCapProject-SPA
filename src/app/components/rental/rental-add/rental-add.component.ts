@@ -53,7 +53,7 @@ export class RentalAddComponent implements OnInit {
           }, 2000);
         },
         (reason) => {
-          this.toastrService.error(reason, 'Hata!');
+          this.toastrService.error('İşlem iptal edildi', 'Uyarı');
         }
       );
   }
@@ -68,7 +68,7 @@ export class RentalAddComponent implements OnInit {
         'Aynı gün için kiralama işlemi gerçekleştirilemez.',
         'Uyarı'
       );
-    } else {
+    } else if (date1 > date2) {
       var difference = date1.getTime() - date2.getTime();
       var days = Math.ceil(difference / (1000 * 3600 * 24));
       this.totalPrice = this.carDetail.dailyPrice * days;

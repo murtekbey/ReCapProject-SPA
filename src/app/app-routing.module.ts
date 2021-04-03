@@ -15,23 +15,26 @@ import { BrandUpdateComponent } from './components/admin/brand/brand-update/bran
 import { ColorUpdateComponent } from './components/admin/color/color-update/color-update.component';
 import { CarAdminComponent } from './components/admin/car-admin/car-admin.component';
 import { CarUpdateComponent } from './components/admin/car-admin/car-update/car-update.component';
+import { LoginComponent } from './components/user/login/login.component';
+import { LoginGuard } from './guards/login.guard';
+import { RegisterComponent } from './components/user/register/register.component';
 
 const routes: Routes = [
   { path: '', component: CarComponent },
 
-  { path: 'admin/brands', component: BrandComponent },
-  { path: 'admin/brands/add', component: BrandAddComponent },
-  { path: 'admin/brands/update/:brandId', component: BrandUpdateComponent },
+  { path: 'admin/brands', component: BrandComponent, canActivate:[LoginGuard] },
+  { path: 'admin/brands/add', component: BrandAddComponent, canActivate:[LoginGuard] },
+  { path: 'admin/brands/update/:brandId', component: BrandUpdateComponent, canActivate:[LoginGuard] },
 
-  { path: 'admin/colors', component: ColorComponent },
-  { path: 'admin/colors/add', component: ColorAddComponent },
-  { path: 'admin/colors/update/:colorId', component: ColorUpdateComponent },
+  { path: 'admin/colors', component: ColorComponent, canActivate:[LoginGuard] },
+  { path: 'admin/colors/add', component: ColorAddComponent, canActivate:[LoginGuard] },
+  { path: 'admin/colors/update/:colorId', component: ColorUpdateComponent, canActivate:[LoginGuard] },
 
-  { path: 'admin/cars', component: CarAdminComponent },
-  { path: 'admin/cars/add', component: CarAddComponent },
-  { path: 'admin/cars/update/:carId', component: CarUpdateComponent },
+  { path: 'admin/cars', component: CarAdminComponent, canActivate:[LoginGuard] },
+  { path: 'admin/cars/add', component: CarAddComponent, canActivate:[LoginGuard] },
+  { path: 'admin/cars/update/:carId', component: CarUpdateComponent, canActivate:[LoginGuard] },
 
-  { path: 'admin/customers', component: CustomerComponent },
+  { path: 'admin/customers', component: CustomerComponent, canActivate:[LoginGuard] },
 
   { path: 'about', component: AboutComponent },
   { path: 'payments', component: PaymentComponent },
@@ -43,6 +46,8 @@ const routes: Routes = [
   { path: 'cars/:colorId/:brandId', component: CarComponent },
 
   { path: 'rentals', component: RentalComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
 ];
 
 @NgModule({
