@@ -1,10 +1,35 @@
 import { Component } from '@angular/core';
+import { AuthService } from './services/auth.service';
+import { LocalStorageService } from './services/local-storage.service';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   title = 'ReCap Project';
+  userMail: string | null = this.localStorageService.get<string>('userMail');
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+    private localStorageService: LocalStorageService
+  ) {}
+
+  ngOnInit(): void {
+    this.getUser();
+  }
+
+  getUser() {
+    if (this.userMail) {
+      this.getUserDetailByEmail(this.userMail);
+    }
+  }
+
+  getUserDetailByEmail(mail: string) {
+    this.userService
+      .getUserDetailByEmail(mail)
+      .subscribe((response) => this.authService.setUserDetail(response.data));
+  }
 }

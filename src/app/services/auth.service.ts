@@ -3,30 +3,25 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
 import { environment } from 'src/environments/environment';
-
-import { ResponseModel } from '../models/responseModel';
-import { SingleResponseModel } from '../models/singleResponseModel';
-
-import { TokenModel } from '../models/tokenModel';
-import { LocalStorageService } from './local-storage.service';
-
-import { AppState } from '../store/app.reducer';
-import { deleteUserDetail, setUserDetail } from '../store/auth/auth.actions';
-
-import { UserDetailDto } from '../models/dtos/userDetailDto';
-import { UserDetailForUpdate } from '../models/dtos/userDetailForUpdate';
 import { UserForLoginDto } from '../models/dtos/userForLoginDto';
 import { UserForRegisterDto } from '../models/dtos/userForRegisterDto';
+import { ResponseModel } from '../models/responseModel';
+import { SingleResponseModel } from '../models/singleResponseModel';
+import { TokenModel } from '../models/tokenModel';
+import { UserDetailDto } from '../models/dtos/userDetailDto';
+import { AppState } from '../store/app.reducer';
+import { deleteUserDetail, setUserDetail } from '../store/auth/auth.actions';
+import { LocalStorageService } from './local-storage.service';
+import { UserDetailForUpdate } from '../models/dtos/userDetailForUpdate';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  userDetail$: Observable<UserDetailDto | undefined> = this.store
+  userDetailDto$: Observable<UserDetailDto | undefined> = this.store
     .select((s) => s.appAuth)
-    .pipe(map((b) => b.userDetail));
+    .pipe(map((b) => b.userDetailDto));
 
   constructor(
     private httpClient: HttpClient,
@@ -34,7 +29,9 @@ export class AuthService {
     private store: Store<AppState>
   ) {}
 
-  login(userForLoginDto: UserForLoginDto) {
+  login(
+    userForLoginDto: UserForLoginDto
+  ): Observable<SingleResponseModel<TokenModel>> {
     return this.httpClient.post<SingleResponseModel<TokenModel>>(
       environment.apiUrl + 'auth/login',
       userForLoginDto
@@ -47,14 +44,16 @@ export class AuthService {
     this.store.dispatch(deleteUserDetail());
   }
 
-  register(userForRegisterDto: UserForRegisterDto) {
+  register(
+    userForRegisterDto: UserForRegisterDto
+  ): Observable<SingleResponseModel<TokenModel>> {
     return this.httpClient.post<SingleResponseModel<TokenModel>>(
       environment.apiUrl + 'auth/register',
       userForRegisterDto
     );
   }
 
-  update(userDetailForUpdate: UserDetailForUpdate) {
+  update(userDetailForUpdate: UserDetailForUpdate): Observable<ResponseModel> {
     return this.httpClient.post<SingleResponseModel<TokenModel>>(
       environment.apiUrl + 'auth/update',
       userDetailForUpdate
@@ -74,13 +73,13 @@ export class AuthService {
                 userMail: userMail,
                 requiredRoles: requiredRoles.join(','),
               }
-            : null,
+            : {},
       }
     );
   }
 
-  setUserDetail(userDetail: UserDetailDto) {
-    this.store.dispatch(setUserDetail({ userDetail: userDetail }));
+  setUserDetail(userDetailDto: UserDetailDto) {
+    this.store.dispatch(setUserDetail({ userDetailDto: userDetailDto }));
   }
 
   deleteUserDetail() {

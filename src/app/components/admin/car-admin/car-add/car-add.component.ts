@@ -44,7 +44,10 @@ export class CarAddComponent implements OnInit {
       modelYear: ['', Validators.required],
       dailyPrice: ['', Validators.required],
       description: ['', Validators.required],
-      findeksScore: ['', [Validators.required, Validators.min(0), Validators.max(1900)]]
+      findeksScore: [
+        '',
+        [Validators.required, Validators.min(0), Validators.max(1900)],
+      ],
     });
   }
 
@@ -53,8 +56,6 @@ export class CarAddComponent implements OnInit {
       let carModel = Object.assign({}, this.carAddForm.value);
       this.carService.add(carModel).subscribe(
         (response) => {
-          console.log(carModel);
-          console.log(response);
           this.toastrService.success(response.message, 'Başarılı');
         },
         (responseError) => {

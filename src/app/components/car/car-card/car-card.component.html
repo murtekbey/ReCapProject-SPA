@@ -4,8 +4,8 @@
             <img *ngIf="!carDetail.image.length;" src="../../../assets/images/no-image.png" class="card-img-top"
                 width="100%" height="200">
             <div *ngFor="let image of carDetail.image">
-                <img *ngIf="!image.isMain" src="../../../assets/images/no-image.png" class="card-img-top"
-                width="100%" height="200">
+                <img *ngIf="!image.isMain" src="../../../assets/images/no-image.png" class="card-img-top" width="100%"
+                    height="200">
                 <img *ngIf="image.isMain" src="{{imageBasePath}}/{{image.imagePath}}" class="card-img-top" width="100%"
                     height="200">
             </div>
@@ -15,9 +15,9 @@
                     <h6>{{carDetail.dailyPrice | currency:"₺" }}</h6>
                 </div>
                 <div class="d-flex flex-row justify-content-between mb-0 px-3 mt-2"> <small
-                    class="text-muted mt-1">Findeks Score</small>
-                <h6>{{carDetail.findeksScore}}</h6>
-            </div>
+                        class="text-muted mt-1">Findeks Score</small>
+                    <h6>{{carDetail.findeksScore}}</h6>
+                </div>
                 <div class="d-flex flex-row justify-content-between p-3 mid">
                     <div class="d-flex flex-column">
                         <p class="text-muted mb-1">{{carDetail.brandName}}</p>

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { CarDetailDto } from 'src/app/models/dtos/carDetailDto';
 import { CarImage } from 'src/app/models/entities/carImage';
 import { CarDetailService } from 'src/app/services/car-detail.service';
+import { AppState } from 'src/app/store/app.reducer';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -17,7 +19,8 @@ export class CarComponent implements OnInit {
   dataLoaded = false;
   constructor(
     private carDetailService: CarDetailService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {

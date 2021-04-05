@@ -45,7 +45,6 @@ export class ColorAddComponent implements OnInit {
         },
         (responseError) => {
           if (responseError.error.Errors.length > 0) {
-            console.log(responseError.error.Errors);
             for (let i = 0; i < responseError.error.Errors.length; i++) {
               this.toastrService.error(
                 responseError.error.Errors[i].ErrorMessage,

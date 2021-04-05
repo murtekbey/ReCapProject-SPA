@@ -1,18 +1,24 @@
-<div class="card">
-    <div class="card-header">
-        Renk
-        <button routerLink='/admin/colors/add' class="btn btn-success float-right">Ekle</button>
-    </div>
-    <div class="card-body">
-        <div class="mb-3">
-            <input id="colorFilter" type="text" class="form-control" [(ngModel)]="colorFilter.colorName"
-                placeholder="Arama yapmak istediğiniz rengi yazınız">
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Renk
+                <button routerLink='/admin/colors/add' class="btn btn-success float-right">Ekle</button>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <input id="colorFilter" type="text" class="form-control" [(ngModel)]="colorFilter.colorName"
+                        placeholder="Arama yapmak istediğiniz rengi yazınız">
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item" routerLink="/admin/colors/update/{{color.colorId}}"
+                        *ngFor="let color of colors| filterBy: colorFilter">
+                        {{color.colorName}}</li>
+                    <li class="list-group-item" *ngIf="(colors | filterBy: colorFilter).length === 0">No matching elements</li>
+                </ul>
+            </div>
         </div>
-        <ul class="list-group">
-            <li class="list-group-item" routerLink="/admin/colors/update/{{color.colorId}}"
-                *ngFor="let color of colors| filterBy: colorFilter">
-                {{color.colorName}}</li>
-            <li class="list-group-item" *ngIf="(colors | filterBy: colorFilter).length === 0">No matching elements</li>
-        </ul>
     </div>
+    <div class="col-md-3"></div>
 </div>

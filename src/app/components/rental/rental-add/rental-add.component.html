@@ -23,9 +23,9 @@
                             <h6>{{carDetail.dailyPrice | currency:"₺" }}</h6>
                         </div>
                         <div class="d-flex flex-row justify-content-between mb-0 px-3 mt-2"> <small
-                            class="text-muted mt-1">Findeks Score</small>
-                        <h6>{{carDetail.findeksScore }}</h6>
-                    </div>
+                                class="text-muted mt-1">Findeks Score</small>
+                            <h6>{{carDetail.findeksScore }}</h6>
+                        </div>
                         <div class="d-flex flex-row justify-content-between p-3 mid">
                             <div class="d-flex flex-column">
                                 <p class="text-muted mb-1">{{carDetail.brandName}}</p>
@@ -73,7 +73,4 @@
         <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('No click')">Hayır</button>
     </div>
 </ng-template>
-
 <button class="btn btn-outline-primary" (click)="open(content)">Kirala</button>
-
-<hr>

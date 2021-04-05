@@ -3,8 +3,12 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CarDetailDto } from 'src/app/models/dtos/carDetailDto';
+import { UserDetailDto } from 'src/app/models/dtos/userDetailDto';
+import { CreditCard } from 'src/app/models/entities/creditCard';
 import { Payment } from 'src/app/models/entities/payment';
 import { Rental } from 'src/app/models/entities/rental';
+import { AuthService } from 'src/app/services/auth.service';
+import { CreditCardService } from 'src/app/services/credit-card.service';
 import { PaymentService } from 'src/app/services/payment.service';
 import { RentalService } from 'src/app/services/rental.service';
 
@@ -14,31 +18,47 @@ import { RentalService } from 'src/app/services/rental.service';
   styleUrls: ['./payment.component.css'],
 })
 export class PaymentComponent implements OnInit {
-  paymentForm: FormGroup;
+  userDetailDto!: UserDetailDto;
+  creditCardForm: FormGroup;
+  creditCard?: CreditCard;
+  selectedCreditCard?: CreditCard;
+
   rental: Rental;
-  payment: Payment;
-  car: CarDetailDto[] = [];
   totalPrice: number;
   dataLoaded = false;
 
   constructor(
     private paymentService: PaymentService,
     private rentalService: RentalService,
+    private creditCardService: CreditCardService,
+    private authService: AuthService,
     private formBuilder: FormBuilder,
     private toastrService: ToastrService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.createPaymentForm();
-    this.loadData();
+    this.getUser();
   }
 
-  createPaymentForm() {
-    this.paymentForm = this.formBuilder.group({
+  getUser() {
+    this.authService.userDetailDto$.subscribe((userDetailDto) => {
+      if (userDetailDto) {
+        this.userDetailDto = userDetailDto;
+        this.getCreditCardsByUserId();
+        this.createCreditCardForm();
+        this.loadData();
+      }
+    });
+  }
+
+  createCreditCardForm() {
+    this.creditCardForm = this.formBuilder.group({
+      userId: [this.userDetailDto.userId, Validators.required],
+      cardName: [''.toUpperCase(), Validators.required],
       cardNumber: [
         '',
-        [Validators.required, Validators.pattern("^((?!(0))[0-9]{16})$")],
+        [Validators.required, Validators.pattern('^((?!(0))[0-9]{16})$')],
       ],
       expiryMonth: [
         '',
@@ -48,10 +68,14 @@ export class PaymentComponent implements OnInit {
         '',
         [Validators.required, Validators.pattern('^([0-9]{2})$')],
       ],
-      cvvCode: [
-        '',
-        [Validators.required, Validators.pattern('^([0-9]{3})$')],
-      ],
+      cvv: ['', [Validators.required, Validators.pattern('^([0-9]{3})$')]],
+    });
+  }
+
+  getCreditCardsByUserId() {
+    this.creditCardService.getAllByUserId(this.userDetailDto.userId).subscribe((response) => {
+      this.creditCard = response.data;
+      console.log(this.creditCard);
     });
   }
 
@@ -66,11 +90,11 @@ export class PaymentComponent implements OnInit {
       () => {
         let payment: any = {
           carId: this.rental.carId,
-          customerId: 1,
+          customerId: this.userDetailDto.customerId,
           amount: this.totalPrice,
         };
         this.paymentService.addPayment(payment).subscribe(
-          (response) => {
+          () => {
             this.toastrService.success(
               'Ödeme işlemi tamamlandı, Anasayfaya yönlendiriliyorsunuz..',
               'Başarılı'
@@ -83,10 +107,35 @@ export class PaymentComponent implements OnInit {
             this.toastrService.warning(err.error.message);
           }
         );
+        this.askSaveCreditCard();
       },
       (err) => {
         this.toastrService.warning(err.error.message);
       }
     );
+  }
+
+  askSaveCreditCard() {
+    if (!this.selectedCreditCard)
+      if (window.confirm('Would you like to save your credit card?')) {
+        let newCreditCard: CreditCard = {
+          customerId: this.userDetailDto.customerId,
+          ...this.creditCardForm.value,
+        };
+        this.saveCreditCard(newCreditCard);
+      }
+  }
+
+  saveCreditCard(creditCard: CreditCard) {
+    this.creditCardService.add(creditCard).subscribe((response) => {
+      this.toastrService.success(response.message);
+    });
+  }
+
+  fillCardInformation(selectedCreditCard: CreditCard) {
+    this.selectedCreditCard = selectedCreditCard;
+    if (this.selectedCreditCard)
+      this.creditCardForm.patchValue({ ...this.selectedCreditCard });
+    else this.creditCardForm.reset();
   }
 }

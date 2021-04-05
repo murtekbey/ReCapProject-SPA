@@ -34,7 +34,7 @@ export class AdminGuard implements CanActivate {
       }),
       catchError(() => {
         this.router.navigate(['']);
-        this.toastrService.info('You are not authorized to access this page.');
+        this.toastrService.info('Gitmek istediğiniz sayfaya erişebilmek için yönetici olmalısınız');
         return of(false);
       })
     );

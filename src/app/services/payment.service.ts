@@ -7,14 +7,14 @@ import { Rental } from '../models/entities/rental';
 import { ResponseModel } from '../models/responseModel';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PaymentService {
-  rental:Rental;
-  totalPrice:number;
+  rental: Rental;
+  totalPrice: number;
 
-  constructor(private httpClient:HttpClient) { }
-  
+  constructor(private httpClient: HttpClient) {}
+
   addPayment(payment: Payment): Observable<ResponseModel> {
     return this.httpClient.post<ResponseModel>(
       environment.apiUrl + 'payments/add',
@@ -22,16 +22,16 @@ export class PaymentService {
     );
   }
 
-  getRental(){
+  getRental() {
     return this.rental;
   }
-  
-  getTotalPrice(){
+
+  getTotalPrice() {
     return this.totalPrice;
   }
 
-  setRental(rental:Rental, totalPrice:number){
-    this.rental=rental;
-    this.totalPrice=totalPrice;
+  setRental(rental: Rental, totalPrice: number) {
+    this.rental = rental;
+    this.totalPrice = totalPrice;
   }
 }

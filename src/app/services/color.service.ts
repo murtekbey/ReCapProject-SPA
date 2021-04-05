@@ -19,8 +19,10 @@ export class ColorService {
     );
   }
 
-  getColorById(colorId:number): Observable<SingleResponseModel<Color>> {
-    return this.httpClient.get<SingleResponseModel<Color>>(environment.apiUrl + "colors/getbyid?colorId=" + colorId)
+  getColorById(colorId: number): Observable<SingleResponseModel<Color>> {
+    return this.httpClient.get<SingleResponseModel<Color>>(
+      environment.apiUrl + 'colors/getbyid?colorId=' + colorId
+    );
   }
 
   add(color: Color): Observable<ResponseModel> {
@@ -41,5 +43,6 @@ export class ColorService {
     return this.httpClient.post<ResponseModel>(
       environment.apiUrl + 'colors/delete',
       color
-    );  }
+    );
+  }
 }

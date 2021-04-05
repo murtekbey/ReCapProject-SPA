@@ -1,75 +1,71 @@
-<div class="container">
-    <h1 class="fw-bold">Account</h1>
-    <form *ngIf="userUpdateForm" [formGroup]="userUpdateForm">
-        <h2 class="fw-light">Information</h2>
-        <div class="row">
-            <div class="col-sm">
-                <div class="mb-3">
-                    <label for="first-name-input" class="form-label">First name</label>
-                    <div class="input-group has-validation">
-                        <input formControlName="firstName" type="text" class="form-control" [ngClass]="{
-                  'is-invalid':
-                    userUpdateForm.controls['firstName'].errors &&
-                    (userUpdateForm.controls['firstName'].touched ||
-                      userUpdateForm.controls['firstName'].dirty),
-                  'is-valid':
-                    !userUpdateForm.controls['firstName'].errors &&
-                    (userUpdateForm.controls['firstName'].touched ||
-                      userUpdateForm.controls['firstName'].dirty)
-                }" id="first-name-input" placeholder="Ahmet" />
-                        <div class="invalid-feedback">Please enter your first name.</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm">
-                <div class="mb-3">
-                    <label for="last-name-input" class="form-label">Last name</label>
-                    <div class="input-group has-validation">
-                        <input formControlName="lastName" type="text" class="form-control" [ngClass]="{
-                  'is-invalid':
-                    userUpdateForm.controls['lastName'].errors &&
-                    (userUpdateForm.controls['lastName'].touched ||
-                      userUpdateForm.controls['lastName'].dirty),
-                  'is-valid':
-                    !userUpdateForm.controls['lastName'].errors &&
-                    (userUpdateForm.controls['lastName'].touched ||
-                      userUpdateForm.controls['lastName'].dirty)
-                }" id="last-name-input" placeholder="Çetinkaya" />
-                        <div class="invalid-feedback">Please enter your last name.</div>
-                    </div>
-                </div>
-            </div>
+<div class="content" *ngIf="userUpdateForm">
+  <div class="row">
+    <div class="col-md-3 "></div>
+    <div class="col-md-6 ">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Kayıt Ol</h5>
         </div>
 
-        <div class="mb-3">
-            <label for="company-name-input" class="form-label">Company name</label>
-            <div class="input-group has-validation">
-                <input formControlName="companyName" type="text" id="company-name-input" class="form-control" [ngClass]="{
-              'is-invalid':
-                userUpdateForm.controls['companyName'].errors &&
-                (userUpdateForm.controls['companyName'].touched ||
-                  userUpdateForm.controls['companyName'].dirty),
-              'is-valid':
-                !userUpdateForm.controls['companyName'].errors &&
-                (userUpdateForm.controls['companyName'].touched ||
-                  userUpdateForm.controls['companyName'].dirty)
-            }" placeholder="{{ (userDetail$ | async)?.firstName }} {{
-              (userDetail$ | async)?.lastName
-            }}" />
-                <div class="invalid-feedback">Please enter your last name.</div>
+        <div class="card-body">
+          <form [formGroup]="userUpdateForm">
+
+            <div class="mb-3">
+              <label for="firstName" class="sr-only">First Name</label>
+              <div class="form-group">
+                <input type="text" id="firstName" formControlName="firstName" placeholder="First Name"
+                  class="form-control" />
+              </div>
             </div>
+
+            <div class="mb-3">
+              <label for="lastName" class="sr-only">Last Name</label>
+              <div class="form-group">
+                <input type="text" id="lastName" formControlName="lastName" placeholder="Last Name"
+                  class="form-control" />
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="companyName" class="sr-only">Company Name</label>
+              <div class="form-group">
+                <input type="text" id="companyName" formControlName="companyName" placeholder="Company Name"
+                  class="form-control" />
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="currentPassword" class="sr-only">Current Password</label>
+              <div class="form-group">
+                <input type="password" id="currentPassword" formControlName="currentPassword"
+                  placeholder="Current Password" class="form-control" />
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="newPassword" class="sr-only">New Password</label>
+              <div class="form-group">
+                <input type="password" id="newPassword" formControlName="newPassword" placeholder="New Password"
+                  class="form-control" />
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email-input" class="form-label">Email address</label>
+              <input type="email" class="form-control text-secondary" id="email-input" placeholder="name@example.com"
+                [value]="(userDetailDto$ | async)?.email" [attr.disabled]="true" />
+            </div>
+
+            <div class="mb-3">
+              <p>Findeks Puanınız: <small>{{ (userDetailDto$ | async)?.findeksScore }}</small></p>
+            </div>
+
+          </form>
         </div>
-
-        <div class="mb-3">
-            <label for="email-input" class="form-label">Email address</label>
-            <input type="email" class="form-control text-secondary" id="email-input" placeholder="name@example.com"
-                [value]="(userDetail$ | async)?.email" [attr.disabled]="true" />
+        <div class="card-footer">
+          <button class="btn btn-fill btn-success" (click)='updateAccount()'>Güncelle</button>
         </div>
-
-        <h2 class="fw-light">Findeks</h2>
-
-        <button (click)="updateAccount()" class="btn btn-primary">
-            Update Account
-        </button>
-    </form>
+      </div>
+    </div>
+  </div>
 </div>

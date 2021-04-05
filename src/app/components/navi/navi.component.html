@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">Car Rental</a>
+        <a class="navbar-brand" routerLink=''>Car Rental</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -9,7 +9,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Anasayfa <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" routerLink=''>Anasayfa <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLink="about">Hakkımızda</a>
@@ -20,30 +20,34 @@
                 <li class="nav-item">
                     <a class="nav-link" routerLink="rentals">Kiralamalar</a>
                 </li>
+            </ul>
+            <ul class="navbar-nav" *ngIf="!(userDetailDto$ | async)">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="login">Giriş</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="register">Kayıt Ol</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav" *ngIf="userDetailDto$ | async">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Yönetici Paneli
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" routerLink="rentals">Kiralamalar</a>
                         <a class="dropdown-item" routerLink="admin/brands">Markalar</a>
                         <a class="dropdown-item" routerLink="admin/colors">Renkler</a>
                         <a class="dropdown-item" routerLink="admin/cars">Arabalar</a>
-                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" routerLink="admin/customers">Müşteriler</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" routerLink="update">Bilgileri Güncelle</a>
                     </div>
                 </li>
-            </ul>
-            <!-- <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Ara" aria-label="Search">
-                <button class="btn btn-light my-2 my-sm-0" type="submit">Ara</button>
-            </form> -->
-            <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="login">Giriş</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="register">Kayıt Ol</a>
+                    <a class="nav-link" role="button" (click)="logout()">{{ (userDetailDto$ | async)?.firstName }}
+                        {{ (userDetailDto$ | async)?.lastName }} (Çıkış)</a>
                 </li>
             </ul>
         </div>

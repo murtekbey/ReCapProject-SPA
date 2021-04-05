@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { first, map } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { first, map } from 'rxjs/operators';
 import { UserDetailDto } from 'src/app/models/dtos/userDetailDto';
+import { UserDetailForUpdate } from 'src/app/models/dtos/userDetailForUpdate';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
-import { UserDetailForUpdate } from 'src/app/models/dtos/userDetailForUpdate';
 
 @Component({
   selector: 'app-update',
@@ -16,9 +16,9 @@ import { UserDetailForUpdate } from 'src/app/models/dtos/userDetailForUpdate';
 })
 export class UpdateComponent implements OnInit {
   userUpdateForm: FormGroup;
-  userDetail$: Observable<UserDetailDto | undefined> = this.authService
-    .userDetail$;
-  userDetail?: UserDetailDto;
+  userDetailDto$: Observable<UserDetailDto | undefined> = this.authService
+    .userDetailDto$;
+  userDetailDto?: UserDetailDto;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -31,20 +31,18 @@ export class UpdateComponent implements OnInit {
   }
 
   getUserDetailsFromStore() {
-    this.authService.userDetail$.pipe(first()).subscribe((userDetail) => {
-      console.log(userDetail);
-      if (!userDetail) return;
-
-      this.userDetail = userDetail;
+    this.authService.userDetailDto$.pipe(first()).subscribe((userDetailDto) => {
+      if (!userDetailDto) return;
+      this.userDetailDto = userDetailDto;
       this.createAccountFrom();
     });
   }
 
   createAccountFrom() {
     this.userUpdateForm = this.formBuilder.group({
-      firstName: [this.userDetail?.firstName, Validators.required],
-      lastName: [this.userDetail?.lastName, Validators.required],
-      companyName: [this.userDetail?.companyName, Validators.required],
+      firstName: [this.userDetailDto?.firstName, Validators.required],
+      lastName: [this.userDetailDto?.lastName, Validators.required],
+      companyName: [this.userDetailDto?.companyName, Validators.required],
       currentPassword: ['', Validators.required],
       newPassword: [''],
     });
@@ -54,16 +52,16 @@ export class UpdateComponent implements OnInit {
     if (!this.userUpdateForm.valid) return;
 
     let userDetailUpdateModel: UserDetailForUpdate = {
-      ...this.userDetail,
+      ...this.userDetailDto,
       ...this.userUpdateForm.value,
     };
     this.authService.update(userDetailUpdateModel).subscribe((response) => {
-      if (!this.userDetail) {
+      if (!this.userDetailDto) {
         return null;
       }
 
       var newUserDetail: UserDetailDto = {
-        ...this.userDetail,
+        ...this.userDetailDto,
         firstName: userDetailUpdateModel.firstName,
         lastName: userDetailUpdateModel.lastName,
         companyName: userDetailUpdateModel.companyName,

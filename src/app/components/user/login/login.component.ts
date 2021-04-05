@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  FormBuilder,
-} from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { UserForLoginDto } from 'src/app/models/dtos/userForLoginDto';
 import { AuthService } from 'src/app/services/auth.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { UserService } from 'src/app/services/user.service';
@@ -21,10 +17,10 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private router: Router,
     private authService: AuthService,
     private userService: UserService,
     private toastrService: ToastrService,
-    private router: Router,
     private localStorageService: LocalStorageService
   ) {}
 
@@ -40,26 +36,23 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    if (this.loginForm.valid) {
-      let loginModel = Object.assign({}, this.loginForm.value);
-      this.authService.login(loginModel).subscribe(
-        (response) => {
-          this.localStorageService.set('tokenModel', response.data);
-          this.localStorageService.set(
-            'userMail',
-            this.loginForm.get('email')?.value
-          );
-          this.getUserDetailByEmail(this.loginForm.get('email')?.value);
-          this.toastrService.info('Giriş yapıldı', 'Tebrikler');
-          setTimeout(() => {
-            this.router.navigate(['']);
-          }, 1000);
-        },
-        (responseError) => {
-          this.toastrService.error(responseError.error);
-        }
-      );
+    if (!this.loginForm.valid) {
+      return;
     }
+    let loginModel: UserForLoginDto = { ...this.loginForm.value };
+    this.authService.login(loginModel).subscribe(
+      (response) => {
+        this.localStorageService.set('tokenModel', response.data);
+        this.localStorageService.set(
+          'userMail',
+          this.loginForm.get('email')?.value
+        );
+        this.getUserDetailByEmail(this.loginForm.get('email')?.value);
+        this.toastrService.info(response.message);
+        this.router.navigateByUrl('');
+      },
+      (errorResponse) => this.toastrService.error(errorResponse.error)
+    );
   }
   getUserDetailByEmail(mail: string) {
     this.userService.getUserDetailByEmail(mail).subscribe((response) => {

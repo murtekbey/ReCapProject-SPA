@@ -51,7 +51,6 @@ export class ColorUpdateComponent implements OnInit {
   update() {
     if (this.colorUpdateForm.valid) {
       let colorModel = Object.assign({}, this.colorUpdateForm.value);
-      console.log(colorModel);
       this.colorService.update(colorModel).subscribe(
         (response) => {
           setTimeout(() => {
@@ -76,7 +75,6 @@ export class ColorUpdateComponent implements OnInit {
   }
 
   delete() {
-    console.log(this.color);
     this.colorService.delete(this.color).subscribe(
       (response) => {
         setTimeout(() => {

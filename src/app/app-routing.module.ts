@@ -22,30 +22,36 @@ import { UpdateComponent } from './components/user/update/update.component';
 import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
-  { path: '', component: CarComponent, canActivate:[AdminGuard] },
+  { path: '', component: CarComponent },
 
-  { path: 'admin/brands', component: BrandComponent, canActivate:[LoginGuard] },
-  { path: 'admin/brands/add', component: BrandAddComponent, canActivate:[LoginGuard] },
-  { path: 'admin/brands/update/:brandId', component: BrandUpdateComponent, canActivate:[LoginGuard] },
+  {
+    path: 'admin',
+    canActivate: [LoginGuard, AdminGuard],
+    children: [
+      { path: 'brands', component: BrandComponent },
+      { path: 'brands/add', component: BrandAddComponent },
+      { path: 'brands/update/:brandId', component: BrandUpdateComponent },
 
-  { path: 'admin/colors', component: ColorComponent, canActivate:[LoginGuard] },
-  { path: 'admin/colors/add', component: ColorAddComponent, canActivate:[LoginGuard] },
-  { path: 'admin/colors/update/:colorId', component: ColorUpdateComponent, canActivate:[LoginGuard] },
+      { path: 'colors', component: ColorComponent },
+      { path: 'colors/add', component: ColorAddComponent },
+      { path: 'colors/update/:colorId', component: ColorUpdateComponent },
 
-  { path: 'admin/cars', component: CarAdminComponent, canActivate:[LoginGuard] },
-  { path: 'admin/cars/add', component: CarAddComponent, canActivate:[LoginGuard] },
-  { path: 'admin/cars/update/:carId', component: CarUpdateComponent, canActivate:[LoginGuard] },
+      { path: 'cars', component: CarAdminComponent },
+      { path: 'cars/add', component: CarAddComponent },
+      { path: 'cars/update/:carId', component: CarUpdateComponent },
 
-  { path: 'admin/customers', component: CustomerComponent, canActivate:[LoginGuard] },
+      { path: 'customers', component: CustomerComponent },
+    ],
+  },
 
   { path: 'about', component: AboutComponent },
   { path: 'payments', component: PaymentComponent },
 
   { path: 'cars', component: CarComponent },
   { path: 'cars/detail/:carId', component: CarDetailComponent },
+  { path: 'cars/:colorId/:brandId', component: CarComponent },
   { path: 'cars/brand/:brandId', component: CarComponent },
   { path: 'cars/color/:colorId', component: CarComponent },
-  { path: 'cars/:colorId/:brandId', component: CarComponent },
 
   { path: 'rentals', component: RentalComponent },
   { path: 'login', component: LoginComponent },

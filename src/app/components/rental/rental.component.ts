@@ -11,7 +11,6 @@ export class RentalComponent implements OnInit {
   rentalDetails: RentalDetailDto[] = [];
   returnDate: Date;
   dataLoaded = false;
-  closeResult = '';
 
   constructor(private rentalDetailService: RentalDetailService) {}
 

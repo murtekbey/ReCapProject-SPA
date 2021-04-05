@@ -4,6 +4,8 @@ import { ToastrService } from 'ngx-toastr';
 import { CarDetailDto } from 'src/app/models/dtos/carDetailDto';
 import { Router } from '@angular/router';
 import { PaymentService } from 'src/app/services/payment.service';
+import { UserDetailDto } from 'src/app/models/dtos/userDetailDto';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-rental-add',
@@ -15,6 +17,7 @@ export class RentalAddComponent implements OnInit {
   returnDate!: Date;
   totalPrice: number;
   formControl: boolean = false;
+  userDetailDto!: UserDetailDto;
 
   @Input()
   carDetail: CarDetailDto;
@@ -26,36 +29,42 @@ export class RentalAddComponent implements OnInit {
     private modalService: NgbModal,
     private toastrService: ToastrService,
     private router: Router,
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private authService: AuthService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getUser();
+  }
+
+  getUser() {
+    this.authService.userDetailDto$.subscribe((userDetailDto) => {
+      if (userDetailDto) {
+        this.userDetailDto = userDetailDto;
+      }
+    });
+  }
 
   open(content: any) {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title', animation: true })
-      .result.then(
-        () => {
-          let rental: any = {
-            carId: this.carDetail.carId,
-            customerId: 1,
-            rentDate: this.rentDate,
-            returnDate: this.returnDate,
-          };
-          this.paymentService.setRental(rental, this.totalPrice);
+      .result.then(() => {
+        let rental: any = {
+          carId: this.carDetail.carId,
+          customerId: this.userDetailDto.customerId,
+          rentDate: this.rentDate,
+          returnDate: this.returnDate,
+        };
+        this.paymentService.setRental(rental, this.totalPrice);
 
-          this.toastrService.success(
-            'Ödeme sayfasına yönlendiriliyorsunuz.',
-            'Başarılı'
-          );
-          setTimeout(() => {
-            this.router.navigate(['/payments']);
-          }, 2000);
-        },
-        (reason) => {
-          this.toastrService.error('İşlem iptal edildi', 'Uyarı');
-        }
-      );
+        this.toastrService.success(
+          'Ödeme sayfasına yönlendiriliyorsunuz.',
+          'Başarılı'
+        );
+        setTimeout(() => {
+          this.router.navigate(['/payments']);
+        }, 2000);
+      });
   }
 
   totalPriceCalculate() {
@@ -78,7 +87,6 @@ export class RentalAddComponent implements OnInit {
 
   getRentMinDate() {
     var today = new Date();
-    //min="1980-01-01"
     today.setDate(today.getDate() + 1);
     return today.toISOString().slice(0, 10);
   }

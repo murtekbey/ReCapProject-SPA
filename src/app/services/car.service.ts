@@ -35,5 +35,6 @@ export class CarService {
     return this.httpClient.post<ResponseModel>(
       environment.apiUrl + 'cars/delete',
       car
-    );  }
+    );
+  }
 }

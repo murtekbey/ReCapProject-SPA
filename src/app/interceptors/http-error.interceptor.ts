@@ -8,7 +8,6 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ResponseModel } from 'src/app/models/responseModel';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
@@ -31,8 +30,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         } else if (responseError.error.message) {
           this.toastrService.error(responseError.error.message);
         } else {
-          this.toastrService.error('Something went wrong..', 'Error');
-          console.log(responseError);
+          this.toastrService.error(responseError.error, 'Error');
         }
         return throwError(responseError);
       })

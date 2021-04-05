@@ -3,4 +3,5 @@ export interface UserForRegisterDto {
   password: string;
   firstName: string;
   lastName: string;
+  companyName: string;
 }

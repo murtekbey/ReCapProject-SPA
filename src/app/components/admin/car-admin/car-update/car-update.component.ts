@@ -48,7 +48,10 @@ export class CarUpdateComponent implements OnInit {
       colorId: [car.colorId, Validators.required],
       modelYear: [car.modelYear, Validators.required],
       dailyPrice: [car.dailyPrice, Validators.required],
-      findeksScore: [car.findeksScore, [Validators.required, Validators.min(0), Validators.max(2500)]],
+      findeksScore: [
+        car.findeksScore,
+        [Validators.required, Validators.min(0), Validators.max(2500)],
+      ],
       description: [car.description, Validators.required],
     });
   }
@@ -63,7 +66,6 @@ export class CarUpdateComponent implements OnInit {
   update() {
     if (this.carUpdateForm.valid) {
       let carModel = Object.assign({}, this.carUpdateForm.value);
-      console.log(carModel);
       this.carService.update(carModel).subscribe(
         (response) => {
           setTimeout(() => {
@@ -83,12 +85,14 @@ export class CarUpdateComponent implements OnInit {
         }
       );
     } else {
-      this.toastrService.error('Girdiğiniz bilgiler hatalı veya zorunlu alanları doldurmadınız', 'Uyarı');
+      this.toastrService.error(
+        'Girdiğiniz bilgiler hatalı veya zorunlu alanları doldurmadınız',
+        'Uyarı'
+      );
     }
   }
 
   delete() {
-    console.log(this.car);
     this.carService.delete(this.car).subscribe(
       (response) => {
         setTimeout(() => {

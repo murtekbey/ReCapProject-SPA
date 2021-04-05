@@ -1,23 +1,23 @@
 import { createReducer, on } from '@ngrx/store';
-import { UserDetailDto } from 'src/app/models/dtos/userDetailDto';
 import { setUserDetail, deleteUserDetail } from './auth.actions';
+import { UserDetailDto } from '../../models/dtos/userDetailDto';
 
 export interface AuthState {
-  userDetail?: UserDetailDto;
+  userDetailDto?: UserDetailDto;
 }
 
 const initialAuthState: AuthState = {
-  userDetail: undefined,
+  userDetailDto: undefined,
 };
 
 export const AuthReducer = createReducer(
   initialAuthState,
-  on(setUserDetail, (state: AuthState, { userDetail }) => ({
+  on(setUserDetail, (state: AuthState, { userDetailDto }) => ({
     ...state,
-    userDetail: userDetail,
+    userDetailDto: userDetailDto,
   })),
   on(deleteUserDetail, (state: AuthState) => ({
     ...state,
-    userDetail: undefined,
+    userDetailDto: undefined,
   }))
 );
