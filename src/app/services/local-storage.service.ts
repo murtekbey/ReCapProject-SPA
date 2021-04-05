@@ -1,43 +1,37 @@
 import { Injectable } from '@angular/core';
-import { UserDetailDto } from '../models/dtos/userDetailDto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocalStorageService {
-  token: string = 'user';
-  user: string = 'user';
+  isLocalStorageSupported!: boolean;
+  localStorage!: Storage;
 
-  constructor() {}
-
-  setToken(responseToken: string) {
-    localStorage.setItem(this.token, responseToken);
+  constructor() {
+    this.isLocalStorageSupported =
+      typeof window['localStorage'] != 'undefined' &&
+      window['localStorage'] != null;
+    if (this.isLocalStorageSupported) this.localStorage = window.localStorage;
   }
 
-  removeToken() {
-    localStorage.removeItem(this.token);
+  get<T>(key: string): T | null {
+    if (!this.isLocalStorageSupported) return null;
+
+    let item: string | null = this.localStorage.getItem(key);
+    let result: T | null = item ? JSON.parse(item) : null;
+    return result;
   }
 
-  getToken() {
-    return localStorage.getItem(this.token);
+  set(key: string, value: any) {
+    if (!this.isLocalStorageSupported) return;
+
+    this.localStorage.setItem(key, JSON.stringify(value));
   }
 
-  isAuthenticated() {
-    if (this.getToken()) {
-      return true;
-    }
+  remove(key: string) {
+    if (!this.isLocalStorageSupported) return null;
+
+    this.localStorage.removeItem(key);
     return false;
-  }
-
-  setUser(userDetailsDto: UserDetailDto) {
-    localStorage.setItem(this.user, JSON.stringify(userDetailsDto));
-  }
-
-  getUser(): UserDetailDto {
-    return JSON.parse(localStorage.getItem(this.user));
-  }
-
-  removeUser() {
-    localStorage.removeItem(this.user);
   }
 }

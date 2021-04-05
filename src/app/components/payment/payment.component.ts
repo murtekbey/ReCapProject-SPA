@@ -58,7 +58,6 @@ export class PaymentComponent implements OnInit {
   loadData() {
     this.rental = this.paymentService.getRental();
     this.totalPrice = this.paymentService.getTotalPrice();
-    console.log(this.rental, this.totalPrice);
     this.dataLoaded = true;
   }
 
@@ -72,7 +71,6 @@ export class PaymentComponent implements OnInit {
         };
         this.paymentService.addPayment(payment).subscribe(
           (response) => {
-            console.log(response);
             this.toastrService.success(
               'Ödeme işlemi tamamlandı, Anasayfaya yönlendiriliyorsunuz..',
               'Başarılı'
@@ -82,12 +80,12 @@ export class PaymentComponent implements OnInit {
             }, 2000);
           },
           (err) => {
-            console.log(err.error.message);
+            this.toastrService.warning(err.error.message);
           }
         );
       },
       (err) => {
-        console.log(err.error.message);
+        this.toastrService.warning(err.error.message);
       }
     );
   }

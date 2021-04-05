@@ -18,9 +18,11 @@ import { CarUpdateComponent } from './components/admin/car-admin/car-update/car-
 import { LoginComponent } from './components/user/login/login.component';
 import { LoginGuard } from './guards/login.guard';
 import { RegisterComponent } from './components/user/register/register.component';
+import { UpdateComponent } from './components/user/update/update.component';
+import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
-  { path: '', component: CarComponent },
+  { path: '', component: CarComponent, canActivate:[AdminGuard] },
 
   { path: 'admin/brands', component: BrandComponent, canActivate:[LoginGuard] },
   { path: 'admin/brands/add', component: BrandAddComponent, canActivate:[LoginGuard] },
@@ -48,6 +50,7 @@ const routes: Routes = [
   { path: 'rentals', component: RentalComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'update', component: UpdateComponent },
 ];
 
 @NgModule({

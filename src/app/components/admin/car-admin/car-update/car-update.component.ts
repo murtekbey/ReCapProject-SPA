@@ -41,13 +41,14 @@ export class CarUpdateComponent implements OnInit {
     });
   }
 
-  createBrandUpdateForm(car: Car) {
+  createCarUpdateForm(car: Car) {
     this.carUpdateForm = this.formBuilder.group({
       carId: [car.carId, Validators.required],
       brandId: [car.brandId, Validators.required],
       colorId: [car.colorId, Validators.required],
       modelYear: [car.modelYear, Validators.required],
       dailyPrice: [car.dailyPrice, Validators.required],
+      findeksScore: [car.findeksScore, [Validators.required, Validators.min(0), Validators.max(2500)]],
       description: [car.description, Validators.required],
     });
   }
@@ -55,7 +56,7 @@ export class CarUpdateComponent implements OnInit {
   getCarById(carId: number) {
     this.carService.getCarById(carId).subscribe((response) => {
       this.car = response.data;
-      this.createBrandUpdateForm(this.car);
+      this.createCarUpdateForm(this.car);
     });
   }
 
@@ -82,7 +83,7 @@ export class CarUpdateComponent implements OnInit {
         }
       );
     } else {
-      this.toastrService.error('Tüm alanları doldurmak zorunludur', 'Uyarı');
+      this.toastrService.error('Girdiğiniz bilgiler hatalı veya zorunlu alanları doldurmadınız', 'Uyarı');
     }
   }
 

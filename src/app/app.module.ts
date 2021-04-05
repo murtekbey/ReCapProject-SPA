@@ -38,6 +38,10 @@ import { CarUpdateComponent } from './components/admin/car-admin/car-update/car-
 import { LoginComponent } from './components/user/login/login.component';
 import { RegisterComponent } from './components/user/register/register.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { UpdateComponent } from './components/user/update/update.component';
+import { StoreModule } from '@ngrx/store';
+import { AppReducers } from './store/app.reducer';
+import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 
 @NgModule({
   declarations: [
@@ -70,6 +74,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     CarUpdateComponent,
     LoginComponent,
     RegisterComponent,
+    UpdateComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,9 +88,11 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
     }),
+    StoreModule.forRoot(AppReducers),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

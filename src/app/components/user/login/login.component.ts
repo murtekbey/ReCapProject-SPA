@@ -8,6 +8,8 @@ import {
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -20,8 +22,10 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
+    private userService: UserService,
     private toastrService: ToastrService,
-    private router: Router
+    private router: Router,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit(): void {
@@ -30,8 +34,8 @@ export class LoginComponent implements OnInit {
 
   createLoginForm() {
     this.loginForm = this.formBuilder.group({
-      email: [null, Validators.required],
-      password: [null, Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
     });
   }
 
@@ -40,7 +44,12 @@ export class LoginComponent implements OnInit {
       let loginModel = Object.assign({}, this.loginForm.value);
       this.authService.login(loginModel).subscribe(
         (response) => {
-          localStorage.setItem('token', response.data.token);
+          this.localStorageService.set('tokenModel', response.data);
+          this.localStorageService.set(
+            'userMail',
+            this.loginForm.get('email')?.value
+          );
+          this.getUserDetailByEmail(this.loginForm.get('email')?.value);
           this.toastrService.info('Giriş yapıldı', 'Tebrikler');
           setTimeout(() => {
             this.router.navigate(['']);
@@ -51,5 +60,10 @@ export class LoginComponent implements OnInit {
         }
       );
     }
+  }
+  getUserDetailByEmail(mail: string) {
+    this.userService.getUserDetailByEmail(mail).subscribe((response) => {
+      this.authService.setUserDetail(response.data);
+    });
   }
 }
