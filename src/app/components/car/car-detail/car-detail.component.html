@@ -28,11 +28,15 @@
     <div class="card col-md-4" style="width: 18rem;">
         <div class="card-body">
             <h5 class="card-title">{{carDetail.brandName}}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{carDetail.colorName}}</h6>
+            <h6 class="card-subtitle mb-3 text-muted"><strong>Renk: </strong>{{carDetail.colorName}}</h6>
+            <h6 class="card-subtitle mb-3 text-muted"><strong>Model: </strong>{{carDetail.modelYear}}</h6>
+            <h6 class="card-subtitle mb-3 text-muted"><strong>Findeks Puanı: </strong>{{carDetail.findeksScore}}</h6>
             <p class="card-text">{{carDetail.description}}</p>
-            <app-rental-add [carDetail]="carDetail" [imageBasePath]="imageBasePath"></app-rental-add>
             <hr>
-            <a routerLink="/cars" class="card-link">Geri Dön</a>
+            <div class="d-flex justify-content-between">
+                <a routerLink="/cars" class="card-link justify-right">Geri Dön</a>
+                <app-rental-add [carDetail]="carDetail" [imageBasePath]="imageBasePath"></app-rental-add>
+            </div>
         </div>
     </div>
 </div>

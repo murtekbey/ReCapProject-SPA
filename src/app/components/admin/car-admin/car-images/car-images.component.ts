@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FileUploader } from 'ng2-file-upload';
 import { ToastrService } from 'ngx-toastr';
@@ -26,7 +26,8 @@ export class CarImagesComponent implements OnInit {
     private modalService: NgbModal,
     private activatedRoute: ActivatedRoute,
     private localStorageService: LocalStorageService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -37,12 +38,22 @@ export class CarImagesComponent implements OnInit {
   }
 
   openXl(content: any) {
-    this.modalService.open(content, {
-      ariaLabelledBy: 'modal-basic-title',
-      animation: true,
-      centered: true,
-      size: 'lg',
-    });
+    this.modalService
+      .open(content, {
+        ariaLabelledBy: 'modal-basic-title',
+        animation: true,
+        centered: true,
+        size: 'lg',
+      })
+      .result.then(
+        () => {},
+        () => {
+          this.router.navigate(['admin/cars']);
+        }
+      )
+      .catch(() => {
+        return null;
+      });
   }
 
   initializeUploader() {
@@ -61,7 +72,6 @@ export class CarImagesComponent implements OnInit {
       if (response) {
         const res: ResponseModel = JSON.parse(response);
         this.toastrService.success(res.message, 'Başarılı');
-        console.log(response);
       }
     };
 
@@ -69,7 +79,6 @@ export class CarImagesComponent implements OnInit {
       if (response) {
         const res: ResponseModel = JSON.parse(response);
         this.toastrService.error(res.message, 'Uyarı');
-        console.log(response);
       }
     };
   }
