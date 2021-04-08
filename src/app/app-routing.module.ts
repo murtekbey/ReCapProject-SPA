@@ -20,9 +20,11 @@ import { LoginGuard } from './guards/login.guard';
 import { RegisterComponent } from './components/user/register/register.component';
 import { UpdateComponent } from './components/user/update/update.component';
 import { AdminGuard } from './guards/admin.guard';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 const routes: Routes = [
-  { path: '', component: CarComponent },
+  { path: '', pathMatch: 'full', component: CarComponent },
+  { path: 'about', component: AboutComponent },
 
   {
     path: 'admin',
@@ -41,11 +43,9 @@ const routes: Routes = [
       { path: 'cars/update/:carId', component: CarUpdateComponent },
 
       { path: 'customers', component: CustomerComponent },
+      { path: 'rentals', component: RentalComponent },
     ],
   },
-
-  { path: 'about', component: AboutComponent },
-  { path: 'payments', component: PaymentComponent },
 
   { path: 'cars', component: CarComponent },
   { path: 'cars/detail/:carId', component: CarDetailComponent },
@@ -53,10 +53,12 @@ const routes: Routes = [
   { path: 'cars/brand/:brandId', component: CarComponent },
   { path: 'cars/color/:colorId', component: CarComponent },
 
-  { path: 'rentals', component: RentalComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'update', component: UpdateComponent },
+  { path: 'update', component: UpdateComponent, canActivate: [LoginGuard] },
+  { path: 'payments', component: PaymentComponent, canActivate: [LoginGuard] },
+
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({

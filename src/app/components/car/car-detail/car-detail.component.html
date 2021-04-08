@@ -16,11 +16,11 @@
             <div class="container" *ngIf="carDetail.image.length > 1"> <a class="carousel-control-prev"
                     href="#carDetailCarousel" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
+                    <span class="sr-only">Önceki</span>
                 </a>
                 <a class="carousel-control-next" href="#carDetailCarousel" role="button" data-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
+                    <span class="sr-only">Sonraki</span>
                 </a>
             </div>
         </div>
@@ -31,6 +31,7 @@
             <h6 class="card-subtitle mb-2 text-muted">{{carDetail.colorName}}</h6>
             <p class="card-text">{{carDetail.description}}</p>
             <app-rental-add [carDetail]="carDetail" [imageBasePath]="imageBasePath"></app-rental-add>
+            <hr>
             <a routerLink="/cars" class="card-link">Geri Dön</a>
         </div>
     </div>

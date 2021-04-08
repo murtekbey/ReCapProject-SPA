@@ -38,4 +38,11 @@ export class RentalService {
       rental
     );
   }
+
+  IsCarCanBeRented(rental: Rental): Observable<ResponseModel> {
+    return this.httpClient.post<ResponseModel>(
+      environment.apiUrl + 'rentals/iscarcanberent',
+      rental
+    );
+  }
 }

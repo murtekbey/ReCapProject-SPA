@@ -5,7 +5,6 @@ import { environment } from 'src/environments/environment';
 import { CreditCard } from '../models/entities/creditCard';
 import { ListResponseModel } from '../models/listResponseModel';
 import { ResponseModel } from '../models/responseModel';
-import { SingleResponseModel } from '../models/singleResponseModel';
 
 @Injectable({
   providedIn: 'root',
@@ -13,10 +12,8 @@ import { SingleResponseModel } from '../models/singleResponseModel';
 export class CreditCardService {
   constructor(private httpClient: HttpClient) {}
 
-  getAllByUserId(
-    userId: number
-  ): Observable<SingleResponseModel<CreditCard>> {
-    return this.httpClient.get<SingleResponseModel<CreditCard>>(
+  getAllByUserId(userId: number): Observable<ListResponseModel<CreditCard>> {
+    return this.httpClient.get<ListResponseModel<CreditCard>>(
       environment.apiUrl + 'creditcards/getallbyuserid?userId=' + userId
     );
   }

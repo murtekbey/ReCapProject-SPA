@@ -28,13 +28,16 @@ export class AdminGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean | UrlTree> | boolean | UrlTree {
     let mail: string | null = this.localStorageService.get<string>('userMail');
-    return this.authService.isAuthenticated(mail, ['admin']).pipe(
+    return this.authService.isAuthorized(mail, ['admin']).pipe(
       map((response) => {
+        console.log(response);
         return response.success;
       }),
       catchError(() => {
         this.router.navigate(['']);
-        this.toastrService.info('Gitmek istediğiniz sayfaya erişebilmek için yönetici olmalısınız');
+        this.toastrService.info(
+          'Gitmek istediğiniz sayfaya erişebilmek için yönetici olmalısınız'
+        );
         return of(false);
       })
     );

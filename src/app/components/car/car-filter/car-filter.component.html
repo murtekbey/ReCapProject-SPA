@@ -21,7 +21,10 @@
                     disabled>Filtrele</button>
                 <button *ngIf="filterBrand && filterColor" type="button" class="btn btn-success mr-5"
                     routerLink="/cars/{{filterColor}}/{{filterBrand}}">Filtrele</button>
-                <button type="button" class="btn btn-warning" routerLink="/cars">Temizle</button>
+                <button *ngIf="!filterBrand || !filterColor" type="button" class="btn btn-danger" routerLink="/cars"
+                    disabled>Temizle</button>
+                <button *ngIf="filterBrand && filterColor" type="button" class="btn btn-danger"
+                    routerLink="/cars">Temizle</button>
             </div>
         </div>
     </div>

@@ -11,53 +11,53 @@
           <form [formGroup]="userUpdateForm">
 
             <div class="mb-3">
-              <label for="firstName" class="sr-only">First Name</label>
+              <label for="firstName" class="sr-only">Adınız</label>
               <div class="form-group">
-                <input type="text" id="firstName" formControlName="firstName" placeholder="First Name"
+                <input type="text" id="firstName" formControlName="firstName" placeholder="Adınız"
                   class="form-control" />
               </div>
             </div>
 
             <div class="mb-3">
-              <label for="lastName" class="sr-only">Last Name</label>
+              <label for="lastName" class="sr-only">Soyadınız</label>
               <div class="form-group">
-                <input type="text" id="lastName" formControlName="lastName" placeholder="Last Name"
+                <input type="text" id="lastName" formControlName="lastName" placeholder="Soyadınız"
                   class="form-control" />
               </div>
             </div>
 
             <div class="mb-3">
-              <label for="companyName" class="sr-only">Company Name</label>
+              <label for="companyName" class="sr-only">Şirket Adı</label>
               <div class="form-group">
-                <input type="text" id="companyName" formControlName="companyName" placeholder="Company Name"
+                <input type="text" id="companyName" formControlName="companyName" placeholder="Şirket Adı"
                   class="form-control" />
               </div>
             </div>
 
             <div class="mb-3">
-              <label for="currentPassword" class="sr-only">Current Password</label>
+              <label for="currentPassword" class="sr-only">Mevcut Şifreniz</label>
               <div class="form-group">
                 <input type="password" id="currentPassword" formControlName="currentPassword"
-                  placeholder="Current Password" class="form-control" />
+                  placeholder="Mevcut Şifreniz" class="form-control" />
               </div>
             </div>
 
             <div class="mb-3">
-              <label for="newPassword" class="sr-only">New Password</label>
+              <label for="newPassword" class="sr-only">Yeni Şifreniz</label>
               <div class="form-group">
-                <input type="password" id="newPassword" formControlName="newPassword" placeholder="New Password"
+                <input type="password" id="newPassword" formControlName="newPassword" placeholder="Yeni Şifreniz"
                   class="form-control" />
               </div>
             </div>
 
             <div class="mb-3">
-              <label for="email-input" class="form-label">Email address</label>
+              <label for="email-input" class="form-label">Email</label>
               <input type="email" class="form-control text-secondary" id="email-input" placeholder="name@example.com"
                 [value]="(userDetailDto$ | async)?.email" [attr.disabled]="true" />
             </div>
 
             <div class="mb-3">
-              <p>Findeks Puanınız: <small>{{ (userDetailDto$ | async)?.findeksScore }}</small></p>
+              <p>Findeks Puanınız: <strong>{{ (userDetailDto$ | async)?.findeksScore }}</strong></p>
             </div>
 
           </form>

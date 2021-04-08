@@ -1,0 +1,13 @@
+.my-drop-zone {
+  border: dotted 3px lightgray;
+}
+
+.nv-file-over {
+  border: dotted 5px red;
+}
+
+.overflowtext {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px;
+}

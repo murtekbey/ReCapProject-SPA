@@ -1,5 +1,15 @@
 ## Latest Updates - _Son Güncellemeler_
 
+- 08 April 2021
+  - Fake Payment service is added. _(Sahte ödeme servisi eklendi.)_
+  - Credit Card save system has been added. _(Kredi kartı kaydetme sistemi eklendi.)_
+  - Local Storage Service is added. _(Local Storage servis eklendi.)_
+  - Findex score requirement was imposed on cars. _(Araçlara findeks puanı zorunluluğu getirildi.)_
+  - During the rent, add a fake service that will query the customer's Findeks score. _(Kiralama esnasında müşterinin findeks puanını sorgulayacak sahte servis eklendi.)_
+  - User (Login, Register, Update) components and services are added. _(Kullanıcı bileşenleri ve servisleri eklendi.)_
+  - User Authorization and Authentication is added. _(Kullanıcı yetkilendirme ve kimlik doğrulama eklendi.)_
+  - Guards are added. (LoginGuard, AdminGuard) _(Guardlar eklendi.)_
+
 - 04 April 2021
   - CRUD operations are added. _((C)reate, (R)ead, (U)pdate, (D)elete operasyonları eklendi.)_
 

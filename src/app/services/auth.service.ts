@@ -60,7 +60,15 @@ export class AuthService {
     );
   }
 
-  isAuthenticated(
+  isAuthenticated() {
+    if (localStorage.getItem('tokenModel')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  isAuthorized(
     userMail?: string | null,
     requiredRoles?: string[]
   ): Observable<ResponseModel> {

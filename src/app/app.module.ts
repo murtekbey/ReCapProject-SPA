@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { FilterPipeModule } from 'ngx-filter-pipe';
+import { FileUploadModule } from 'ng2-file-upload';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -41,7 +42,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { UpdateComponent } from './components/user/update/update.component';
 import { StoreModule } from '@ngrx/store';
 import { AppReducers } from './store/app.reducer';
-import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
+import { CarImagesComponent } from './components/admin/car-admin/car-images/car-images.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +77,8 @@ import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
     LoginComponent,
     RegisterComponent,
     UpdateComponent,
+    CarImagesComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,6 +89,7 @@ import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+    FileUploadModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
     }),
@@ -92,7 +97,6 @@ import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

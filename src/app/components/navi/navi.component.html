@@ -8,17 +8,14 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" routerLink=''>Anasayfa <span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink=''>Anasayfa</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLink="about">Hakkımızda</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLink="cars">Arabalar</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="rentals">Kiralamalar</a>
                 </li>
             </ul>
             <ul class="navbar-nav" *ngIf="!(userDetailDto$ | async)">
@@ -33,21 +30,19 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Yönetici Paneli
+                        {{ (userDetailDto$ | async)?.firstName }}
+                        {{ (userDetailDto$ | async)?.lastName }}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" routerLink="rentals">Kiralamalar</a>
+                        <a class="dropdown-item" routerLink="admin/rentals">Kiralamalar</a>
                         <a class="dropdown-item" routerLink="admin/brands">Markalar</a>
                         <a class="dropdown-item" routerLink="admin/colors">Renkler</a>
                         <a class="dropdown-item" routerLink="admin/cars">Arabalar</a>
                         <a class="dropdown-item" routerLink="admin/customers">Müşteriler</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" routerLink="update">Bilgileri Güncelle</a>
+                        <a class="dropdown-item" role="button" (click)="logout()">Çıkış Yap</a>
                     </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" role="button" (click)="logout()">{{ (userDetailDto$ | async)?.firstName }}
-                        {{ (userDetailDto$ | async)?.lastName }} (Çıkış)</a>
                 </li>
             </ul>
         </div>

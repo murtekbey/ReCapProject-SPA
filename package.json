@@ -24,6 +24,7 @@
     "@ngrx/store": "^11.1.0",
     "bootstrap": "^4.6.0",
     "jquery": "^3.6.0",
+    "ng2-file-upload": "^1.4.0",
     "ngx-filter-pipe": "^2.1.2",
     "ngx-toastr": "^13.2.1",
     "popper.js": "^1.16.1",

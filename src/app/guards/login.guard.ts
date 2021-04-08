@@ -7,8 +7,7 @@ import {
   UrlTree,
 } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Injectable({
@@ -22,19 +21,19 @@ export class LoginGuard implements CanActivate {
   ) {}
 
   canActivate(
-    next: ActivatedRouteSnapshot,
+    route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<boolean> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.authService.isAuthenticated().pipe(
-      map((response) => {
-        return response.success;
-      }),
-      catchError(() => {
-        this.authService.logout();
-        this.router.navigate(['/login']);
-        this.toastrService.info('Sisteme giriş yapmalısınız');
-        return of(false);
-      })
-    );
+  ):
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree>
+    | boolean
+    | UrlTree {
+    if (this.authService.isAuthenticated()) {
+      return true;
+    } else {
+      this.router.navigate(['login']);
+      this.toastrService.info('Sisteme giriş yapmalısınız');
+      return false;
+    }
   }
 }

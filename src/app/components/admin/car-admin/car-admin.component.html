@@ -26,7 +26,6 @@
         <td>
             <img *ngIf="!carDetail.image.length;" src="../../../assets/images/no-image.png" height="50px">
             <div *ngFor="let image of carDetail.image">
-                <img *ngIf="!image.isMain" src="../../../assets/images/no-image.png" height="50px">
                 <img *ngIf="image.isMain" src="{{imageBasePath}}/{{image.imagePath}}" height="50px">
             </div>
         </td>

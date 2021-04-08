@@ -15,8 +15,7 @@
                     <li class="list-group-item" routerLink="/admin/brands/update/{{brand.brandId}}"
                         *ngFor="let brand of brands| filterBy: brandFilter">
                         {{brand.brandName}}</li>
-                    <li class="list-group-item" *ngIf="(brands | filterBy: brandFilter).length === 0">No matching
-                        elements
+                    <li class="list-group-item" *ngIf="(brands | filterBy: brandFilter).length === 0">Herhangi bir marka bulunamadı
                     </li>
                 </ul>
             </div>

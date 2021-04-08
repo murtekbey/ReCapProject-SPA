@@ -15,7 +15,7 @@
                     <li class="list-group-item" routerLink="/admin/colors/update/{{color.colorId}}"
                         *ngFor="let color of colors| filterBy: colorFilter">
                         {{color.colorName}}</li>
-                    <li class="list-group-item" *ngIf="(colors | filterBy: colorFilter).length === 0">No matching elements</li>
+                    <li class="list-group-item" *ngIf="(colors | filterBy: colorFilter).length === 0">Aradığınız renk bulunamadı</li>
                 </ul>
             </div>
         </div>

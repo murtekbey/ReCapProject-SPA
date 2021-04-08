@@ -20,7 +20,7 @@ import { RentalService } from 'src/app/services/rental.service';
 export class PaymentComponent implements OnInit {
   userDetailDto!: UserDetailDto;
   creditCardForm: FormGroup;
-  creditCard?: CreditCard;
+  creditCards?: CreditCard[] = [];
   selectedCreditCard?: CreditCard;
 
   rental: Rental;
@@ -74,8 +74,8 @@ export class PaymentComponent implements OnInit {
 
   getCreditCardsByUserId() {
     this.creditCardService.getAllByUserId(this.userDetailDto.userId).subscribe((response) => {
-      this.creditCard = response.data;
-      console.log(this.creditCard);
+      this.creditCards = response.data;
+      console.log(this.creditCards);
     });
   }
 

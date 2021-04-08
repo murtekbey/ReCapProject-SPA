@@ -10,9 +10,9 @@
                 <div class="card-body">
                     <form [formGroup]="colorUpdateForm" *ngIf='color'>
                         <div class="mb-3">
-                            <label for="colorName" class="fore-label">Color Name</label>
+                            <label for="colorName" class="fore-label">Renk Adı</label>
                             <div class="form-group">
-                                <input type="text" id="colorName" formControlName="colorName" placeholder="Color Name"
+                                <input type="text" id="colorName" formControlName="colorName" placeholder="Renk Adı"
                                     class="form-control" />
                             </div>
                         </div>
@@ -20,7 +20,7 @@
                     </form>
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-fill btn-success" (click)="update()">Ekle</button>
+                    <button class="btn btn-fill btn-success" (click)="update()">Güncelle</button>
                     <button class="btn btn-fill btn-danger float-right" (click)="delete()">Sil</button>
                 </div>
             </div>

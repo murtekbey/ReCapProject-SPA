@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { PaymentService } from 'src/app/services/payment.service';
 import { UserDetailDto } from 'src/app/models/dtos/userDetailDto';
 import { AuthService } from 'src/app/services/auth.service';
+import { RentalService } from 'src/app/services/rental.service';
 
 @Component({
   selector: 'app-rental-add',
@@ -30,6 +31,7 @@ export class RentalAddComponent implements OnInit {
     private toastrService: ToastrService,
     private router: Router,
     private paymentService: PaymentService,
+    private rentalService: RentalService,
     private authService: AuthService
   ) {}
 
@@ -49,21 +51,10 @@ export class RentalAddComponent implements OnInit {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title', animation: true })
       .result.then(() => {
-        let rental: any = {
-          carId: this.carDetail.carId,
-          customerId: this.userDetailDto.customerId,
-          rentDate: this.rentDate,
-          returnDate: this.returnDate,
-        };
-        this.paymentService.setRental(rental, this.totalPrice);
-
-        this.toastrService.success(
-          'Ödeme sayfasına yönlendiriliyorsunuz.',
-          'Başarılı'
-        );
-        setTimeout(() => {
-          this.router.navigate(['/payments']);
-        }, 2000);
+        this.IsCarCanBeRented();
+      })
+      .catch(() => {
+        return null;
       });
   }
 
@@ -83,6 +74,38 @@ export class RentalAddComponent implements OnInit {
       this.totalPrice = this.carDetail.dailyPrice * days;
       this.formControl = true;
     }
+  }
+
+  IsCarCanBeRented() {
+    let rental: any = {
+      carId: this.carDetail.carId,
+      customerId: this.userDetailDto.customerId,
+      rentDate: this.rentDate,
+      returnDate: this.returnDate,
+    };
+
+    this.rentalService.IsCarCanBeRented(rental).subscribe(
+      (response) => {
+        this.paymentService.setRental(rental, this.totalPrice);
+        this.toastrService.success(
+          'Ödeme sayfasına yönlendiriliyorsunuz.',
+          'Başarılı'
+        );
+        setTimeout(() => {
+          this.router.navigate(['/payments']);
+        }, 2000);
+      },
+      (responseError) => {
+        if (responseError.error.Errors.length > 0) {
+          for (let i = 0; i < responseError.error.Errors.length; i++) {
+            this.toastrService.error(
+              responseError.error.Errors[i].ErrorMessage,
+              'Doğrulama hatası'
+            );
+          }
+        }
+      }
+    );
   }
 
   getRentMinDate() {
