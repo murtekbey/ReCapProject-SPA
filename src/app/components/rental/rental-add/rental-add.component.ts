@@ -85,7 +85,7 @@ export class RentalAddComponent implements OnInit {
     };
 
     this.rentalService.IsCarCanBeRented(rental).subscribe(
-      (response) => {
+      () => {
         this.paymentService.setRental(rental, this.totalPrice);
         this.toastrService.success(
           'Ödeme sayfasına yönlendiriliyorsunuz.',

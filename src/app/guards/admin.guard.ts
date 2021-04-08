@@ -24,7 +24,7 @@ export class AdminGuard implements CanActivate {
   ) {}
 
   canActivate(
-    next: ActivatedRouteSnapshot,
+    route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean | UrlTree> | boolean | UrlTree {
     let mail: string | null = this.localStorageService.get<string>('userMail');

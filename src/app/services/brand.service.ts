@@ -14,11 +14,15 @@ export class BrandService {
   constructor(private httpClient: HttpClient) {}
 
   getBrands(): Observable<ListResponseModel<Brand>> {
-    return this.httpClient.get<ListResponseModel<Brand>>(environment.apiUrl + "brands");
+    return this.httpClient.get<ListResponseModel<Brand>>(
+      environment.apiUrl + 'brands'
+    );
   }
 
-  getBrandById(brandId:number): Observable<SingleResponseModel<Brand>> {
-    return this.httpClient.get<SingleResponseModel<Brand>>(environment.apiUrl + "brands/getbyid?brandId=" + brandId)
+  getBrandById(brandId: number): Observable<SingleResponseModel<Brand>> {
+    return this.httpClient.get<SingleResponseModel<Brand>>(
+      environment.apiUrl + 'brands/getbyid?brandId=' + brandId
+    );
   }
 
   add(brand: Brand): Observable<ResponseModel> {
@@ -39,5 +43,6 @@ export class BrandService {
     return this.httpClient.post<ResponseModel>(
       environment.apiUrl + 'brands/delete',
       brand
-    );  }
+    );
+  }
 }

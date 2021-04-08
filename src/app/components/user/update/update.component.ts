@@ -3,11 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 import { UserDetailDto } from 'src/app/models/dtos/userDetailDto';
 import { UserDetailForUpdate } from 'src/app/models/dtos/userDetailForUpdate';
 import { AuthService } from 'src/app/services/auth.service';
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-update',
@@ -16,9 +15,10 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class UpdateComponent implements OnInit {
   userUpdateForm: FormGroup;
-  userDetailDto$: Observable<UserDetailDto | undefined> = this.authService
-    .userDetailDto$;
   userDetailDto?: UserDetailDto;
+  userDetailDto$: Observable<UserDetailDto | undefined> = this.authService
+  .userDetailDto$;
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -32,7 +32,9 @@ export class UpdateComponent implements OnInit {
 
   getUserDetailsFromStore() {
     this.authService.userDetailDto$.pipe(first()).subscribe((userDetailDto) => {
-      if (!userDetailDto) return;
+      if (!userDetailDto) {
+        return null;
+      }
       this.userDetailDto = userDetailDto;
       this.createAccountFrom();
     });
@@ -49,12 +51,15 @@ export class UpdateComponent implements OnInit {
   }
 
   updateAccount() {
-    if (!this.userUpdateForm.valid) return;
+    if (!this.userUpdateForm.valid) {
+      return null;
+    }
 
     let userDetailUpdateModel: UserDetailForUpdate = {
       ...this.userDetailDto,
       ...this.userUpdateForm.value,
     };
+
     this.authService.update(userDetailUpdateModel).subscribe((response) => {
       if (!this.userDetailDto) {
         return null;

@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
           this.loginForm.get('email')?.value
         );
         this.getUserDetailByEmail(this.loginForm.get('email')?.value);
-        this.toastrService.info(response.message);
+        this.toastrService.info('Giriş Yapıldı', 'Başarılı');
         this.router.navigateByUrl('');
       },
       (errorResponse) => this.toastrService.error(errorResponse.error)
